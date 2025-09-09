@@ -14,7 +14,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(userId string, username string, jwtSecret string, ttl time.Duration) (string, error) {
+func GenerateToken(userId string, username string, jwtSecret string, expiresAt time.Duration) (string, error) {
 	claims := Claims{
 		Id:       userId,
 		Username: username,
@@ -22,8 +22,8 @@ func GenerateToken(userId string, username string, jwtSecret string, ttl time.Du
 			Issuer:    "jejakmakan",
 			Subject:   userId,
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(ttl)),
-			ID:        fmt.Sprintf("%d", time.Now().UnixNano()), // optional jti
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiresAt)),
+			ID:        fmt.Sprintf("%d", time.Now().UnixNano()),
 		},
 	}
 

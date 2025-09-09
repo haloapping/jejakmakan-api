@@ -1,0 +1,62 @@
+{"level":"info","validation":{"email":["invalid email"],"password":["minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:35:56+07:00","message":"validation"}
+{"level":"info","validation":{"password":["minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:36:03+07:00","message":"validation"}
+{"level":"info","validation":{"password":["minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:36:34+07:00","message":"validation"}
+{"level":"info","validation":{"password":["minimal 1 punctuation"]},"time":"2025-09-09T19:36:54+07:00","message":"validation"}
+{"level":"info","validation":{"password":["minimal 1 punctuation"]},"time":"2025-09-09T19:37:00+07:00","message":"validation"}
+{"level":"info","validation":{"password":["minimal 1 punctuation"]},"time":"2025-09-09T19:37:01+07:00","message":"validation"}
+{"level":"info","time":"2025-09-09T19:37:12+07:00","message":"registration is successfully"}
+{"level":"error","time":"2025-09-09T19:38:57+07:00","message":"ERROR: null value in column \"password\" of relation \"users\" violates not-null constraint (SQLSTATE 23502)"}
+{"level":"error","time":"2025-09-09T19:41:13+07:00","message":"ERROR: INSERT has more target columns than expressions (SQLSTATE 42601)"}
+{"level":"error","time":"2025-09-09T19:41:13+07:00","message":"ERROR: INSERT has more target columns than expressions (SQLSTATE 42601)"}
+{"level":"info","time":"2025-09-09T19:41:25+07:00","message":"registration is successfully"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:14+07:00","message":"validation"}
+{"level":"error","time":"2025-09-09T19:52:14+07:00","message":"ERROR: duplicate key value violates unique constraint \"users_username_key\" (SQLSTATE 23505)"}
+{"level":"info","time":"2025-09-09T19:52:14+07:00","message":"registration is successfully"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:42+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:42+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:42+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:42+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:43+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:43+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:43+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:43+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:43+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:44+07:00","message":"validation"}
+{"level":"info","validation":{"confirmPassword":["confirm password and password is not match"],"password":["minimal 1 lowercase","minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-09T19:52:44+07:00","message":"validation"}
+{"level":"info","time":"2025-09-09T19:58:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:58:59+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:05+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:06+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:07+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:09+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:10+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:10+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:10+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:10+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:11+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:11+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:11+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:11+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:12+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:13+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:13+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T19:59:13+07:00","message":"login is successfully"}
+{"level":"info","time":"2025-09-09T20:00:47+07:00","message":"login is successfully"}
+{"level":"error","time":"2025-09-09T20:00:47+07:00","message":"crypto/bcrypt: hashedPassword is not the hash of the given password"}
+{"level":"info","time":"2025-09-09T20:01:07+07:00","message":"login is successfully"}
+{"level":"error","time":"2025-09-09T20:01:07+07:00","message":"no rows in result set"}
+{"level":"info","time":"2025-09-09T20:01:09+07:00","message":"login is successfully"}
+{"level":"error","time":"2025-09-09T20:01:09+07:00","message":"no rows in result set"}
+{"level":"info","time":"2025-09-09T20:01:18+07:00","message":"login is successfully"}
+{"level":"error","time":"2025-09-09T22:13:48+07:00","message":"ERROR: column \"names\" of relation \"owners\" does not exist (SQLSTATE 42703)"}
+{"level":"error","time":"2025-09-09T22:14:03+07:00","message":"expected 2 arguments, got 3"}
+{"level":"info","time":"2025-09-09T22:14:16+07:00","message":"owner is added"}

@@ -1,4 +1,357 @@
+definitions:
+  api.MultipleDataResp-owner_Owner:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/owner.Owner'
+        type: array
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  api.SingleDataResp-owner_Owner:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/owner.Owner'
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  api.SingleDataResp-user_UserLogin:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/user.UserLogin'
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  api.SingleDataResp-user_UserRegister:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/user.UserRegister'
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  owner.AddReq:
+    properties:
+      images:
+        type: string
+        x-order: "1"
+      name:
+        type: string
+        x-order: "2"
+    required:
+    - images
+    - name
+    type: object
+  owner.Owner:
+    properties:
+      createdAt:
+        type: string
+        x-order: "4"
+      id:
+        type: string
+        x-order: "1"
+      images:
+        type: string
+        x-order: "2"
+      name:
+        type: string
+        x-order: "3"
+      updatedAt:
+        type: string
+        x-order: "5"
+    required:
+    - createdAt
+    - id
+    - images
+    - name
+    - updatedAt
+    type: object
+  owner.UpdateReq:
+    properties:
+      images:
+        type: string
+        x-order: "1"
+      name:
+        type: string
+        x-order: "2"
+    type: object
+  user.UserLogin:
+    properties:
+      id:
+        type: string
+        x-order: "1"
+      password:
+        type: string
+        x-order: "3"
+      username:
+        type: string
+        x-order: "2"
+    required:
+    - id
+    - password
+    - username
+    type: object
+  user.UserLoginReq:
+    properties:
+      password:
+        type: string
+        x-order: "2"
+      username:
+        type: string
+        x-order: "1"
+    required:
+    - password
+    - username
+    type: object
+  user.UserRegister:
+    properties:
+      createdAt:
+        type: string
+        x-order: "6"
+      email:
+        type: string
+        x-order: "4"
+      fullname:
+        type: string
+        x-order: "5"
+      id:
+        type: string
+        x-order: "1"
+      profilePicture:
+        type: string
+        x-order: "2"
+      updatedAt:
+        type: string
+        x-order: "7"
+      username:
+        type: string
+        x-order: "3"
+    required:
+    - createdAt
+    - email
+    - fullname
+    - id
+    - profilePicture
+    - updatedAt
+    - username
+    type: object
+  user.UserRegisterReq:
+    properties:
+      confirmPassword:
+        type: string
+        x-order: "3"
+      email:
+        type: string
+        x-order: "5"
+      fullname:
+        type: string
+        x-order: "6"
+      password:
+        type: string
+        x-order: "2"
+      profilePicture:
+        type: string
+        x-order: "4"
+      username:
+        type: string
+        x-order: "1"
+    required:
+    - confirmPassword
+    - email
+    - fullname
+    - password
+    - profilePicture
+    - username
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /owners:
+    post:
+      consumes:
+      - application/json
+      description: Add new owner
+      parameters:
+      - description: Add request
+        in: body
+        name: owner
+        required: true
+        schema:
+          $ref: '#/definitions/owner.AddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      summary: Add new owner
+      tags:
+      - owners
+  /owners/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete owner by id
+      parameters:
+      - description: owner id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      summary: Delete owner by id
+      tags:
+      - owners
+    get:
+      consumes:
+      - application/json
+      description: Get owner by id
+      parameters:
+      - description: owner id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      summary: Get owner by id
+      tags:
+      - owners
+    patch:
+      consumes:
+      - application/json
+      description: Update owner by id
+      parameters:
+      - description: owner id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update request
+        in: body
+        name: owner
+        required: true
+        schema:
+          $ref: '#/definitions/owner.UpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      summary: Update owner by id
+      tags:
+      - owners
+  /owners/{userId}:
+    get:
+      consumes:
+      - application/json
+      description: Get all owners by owner id
+      parameters:
+      - description: owner id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - default: 1
+        description: offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 15
+        description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.MultipleDataResp-owner_Owner'
+      summary: Get all owners by owner id
+      tags:
+      - owners
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user
+      parameters:
+      - description: Login user request
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-user_UserLogin'
+      summary: Login user
+      tags:
+      - users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Register user
+      parameters:
+      - description: Register user request
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserRegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-user_UserRegister'
+      summary: Register user
+      tags:
+      - users
 swagger: "2.0"

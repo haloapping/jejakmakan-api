@@ -59,3 +59,16 @@ func RegisterValidation(req UserRegisterReq) map[string][]string {
 
 	return validation
 }
+
+func LoginValidation(req UserLoginReq) map[string][]string {
+	validation := make(map[string][]string)
+
+	if req.Username == "" {
+		validation["username"] = append(validation["username"], "cannot empty")
+	}
+	if req.Password == "" {
+		validation["password"] = append(validation["password"], "cannot empty")
+	}
+
+	return validation
+}

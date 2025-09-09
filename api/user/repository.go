@@ -26,14 +26,14 @@ func (r Repository) Register(c echo.Context, req UserRegisterReq) (UserRegister,
 	}
 
 	q := `
-		INSERT INTO users(id, profile_picture, username, email, fullname)
-		VALUES($1, $2, $3, $4, $5)
+		INSERT INTO users(id, profile_picture, username, email, password, fullname)
+		VALUES($1, $2, $3, $4, $5, $6)
 		RETURNING id, profile_picture, username, email, fullname, created_at, updated_at;
 	`
 	row := tx.QueryRow(
 		ctx,
 		q,
-		ulid.Make().String(), req.ProfilePicture, req.Username, req.Email, req.Fullname,
+		ulid.Make().String(), req.ProfilePicture, req.Username, req.Email, req.Password, req.Fullname,
 	)
 	var ur UserRegister
 	err = row.Scan(&ur.Id, &ur.ProfilePicture, &ur.Username, &ur.Email, &ur.Fullname, &ur.CreatedAt, &ur.UpdatedAt)
@@ -84,7 +84,7 @@ func (r Repository) Biodata(c echo.Context, username string) (UserBiodata, error
 	}
 
 	q := `
-		SELECT id, profile_picture, username, password, email, fullname
+		SELECT id, profile_picture, username, email, fullname, password
 		FROM users
 		WHERE username = $1;
 	`

@@ -14,7 +14,524 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/owners": {
+            "post": {
+                "description": "Add new owner",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Add new owner",
+                "parameters": [
+                    {
+                        "description": "Add request",
+                        "name": "owner",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/owner.AddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            }
+        },
+        "/owners/{id}": {
+            "get": {
+                "description": "Get owner by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Get owner by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "owner id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete owner by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Delete owner by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "owner id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update owner by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Update owner by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "owner id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request",
+                        "name": "owner",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/owner.UpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            }
+        },
+        "/owners/{userId}": {
+            "get": {
+                "description": "Get all owners by owner id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Get all owners by owner id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "owner id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 15,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.MultipleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Login user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Login user",
+                "parameters": [
+                    {
+                        "description": "Login user request",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UserLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-user_UserLogin"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/register": {
+            "post": {
+                "description": "Register user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Register user",
+                "parameters": [
+                    {
+                        "description": "Register user request",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UserRegisterReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-user_UserRegister"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.MultipleDataResp-owner_Owner": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/owner.Owner"
+                    },
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.SingleDataResp-owner_Owner": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/owner.Owner"
+                        }
+                    ],
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.SingleDataResp-user_UserLogin": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/user.UserLogin"
+                        }
+                    ],
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.SingleDataResp-user_UserRegister": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/user.UserRegister"
+                        }
+                    ],
+                    "x-order": "2"
+                }
+            }
+        },
+        "owner.AddReq": {
+            "type": "object",
+            "required": [
+                "images",
+                "name"
+            ],
+            "properties": {
+                "images": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "2"
+                }
+            }
+        },
+        "owner.Owner": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "images",
+                "name",
+                "updatedAt"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "x-order": "5"
+                }
+            }
+        },
+        "owner.UpdateReq": {
+            "type": "object",
+            "properties": {
+                "images": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "2"
+                }
+            }
+        },
+        "user.UserLogin": {
+            "type": "object",
+            "required": [
+                "id",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "username": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "password": {
+                    "type": "string",
+                    "x-order": "3"
+                }
+            }
+        },
+        "user.UserLoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "password": {
+                    "type": "string",
+                    "x-order": "2"
+                }
+            }
+        },
+        "user.UserRegister": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "email",
+                "fullname",
+                "id",
+                "profilePicture",
+                "updatedAt",
+                "username"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "profilePicture": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "username": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "email": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "fullname": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "x-order": "7"
+                }
+            }
+        },
+        "user.UserRegisterReq": {
+            "type": "object",
+            "required": [
+                "confirmPassword",
+                "email",
+                "fullname",
+                "password",
+                "profilePicture",
+                "username"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "password": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "confirmPassword": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "profilePicture": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "email": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "fullname": {
+                    "type": "string",
+                    "x-order": "6"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it

@@ -36,6 +36,11 @@ func (s Service) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 		return UserLogin{}, err
 	}
 
+	err = bcrypt.CompareHashAndPassword([]byte(items.Password), []byte(req.Password))
+	if err != nil {
+		return UserLogin{}, err
+	}
+
 	return items, nil
 }
 
