@@ -4,7 +4,6 @@ go 1.24.4
 
 require (
 	github.com/MarceloPetrucio/go-scalar-api-reference v0.0.0-20240521013641-ce5d2efe0e06
-	github.com/brianvoe/gofakeit v3.18.0+incompatible
 	github.com/brianvoe/gofakeit/v7 v7.6.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/guregu/null/v6 v6.0.0
