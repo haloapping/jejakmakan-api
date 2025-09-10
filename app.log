@@ -60,3 +60,81 @@
 {"level":"error","time":"2025-09-09T22:13:48+07:00","message":"ERROR: column \"names\" of relation \"owners\" does not exist (SQLSTATE 42703)"}
 {"level":"error","time":"2025-09-09T22:14:03+07:00","message":"expected 2 arguments, got 3"}
 {"level":"info","time":"2025-09-09T22:14:16+07:00","message":"owner is added"}
+{"level":"info","time":"2025-09-09T23:04:49+07:00","message":"owner is added"}
+{"level":"error","time":"2025-09-10T20:24:12+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:24:49+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:24:50+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:24:50+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:00+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:00+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:00+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:36+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:37+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:37+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:37+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:27:37+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"error","time":"2025-09-10T20:29:24+07:00","message":"code=400, message=EOF, internal=EOF"}
+{"level":"info","validation":{"city":["cannot empty"],"details":["cannot empty"],"district":["cannot empty"],"postalCode":["cannot empty"],"province":["cannot empty"]},"time":"2025-09-10T20:29:47+07:00","message":"validation"}
+{"level":"info","time":"2025-09-10T20:30:07+07:00","message":"location is added"}
+{"level":"info","time":"2025-09-10T22:20:29+07:00","message":"retrieve all locations"}
+{"level":"info","time":"2025-09-10T22:20:50+07:00","message":"location is added"}
+{"level":"info","time":"2025-09-10T22:21:14+07:00","message":"owner is added"}
+{"level":"info","validation":{"password":["minimal 1 uppercase","minimal 1 digit","minimal 1 punctuation"]},"time":"2025-09-10T22:22:05+07:00","message":"validation"}
+{"level":"info","time":"2025-09-10T22:22:39+07:00","message":"registration is successfully"}
+{"level":"info","time":"2025-09-10T22:23:19+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:35:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:36:18+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:36:19+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:36:19+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:36:19+07:00","message":"food is added"}
+{"level":"error","time":"2025-09-10T22:37:11+07:00","message":"ERROR: syntax error at or near \"images\" (SQLSTATE 42601)"}
+{"level":"info","time":"2025-09-10T22:37:40+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:25+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:26+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:27+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:27+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:27+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:28+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:56+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:57+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:58+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:39:58+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:13+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:14+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:14+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:14+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:14+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:40:32+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:43:52+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:08+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:09+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:10+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:10+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:10+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:10+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:10+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:12+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:12+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:12+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:12+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:13+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:44:13+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:45:00+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:45:00+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:50:05+07:00","message":"location is added"}
+{"level":"info","time":"2025-09-10T22:50:14+07:00","message":"owner is added"}
+{"level":"info","validation":{"email":["invalid email"]},"time":"2025-09-10T22:50:46+07:00","message":"validation"}
+{"level":"info","time":"2025-09-10T22:50:55+07:00","message":"registration is successfully"}
+{"level":"info","time":"2025-09-10T22:51:36+07:00","message":"food is added"}
+{"level":"info","validation":{"images":["cannot empty"]},"time":"2025-09-10T22:52:05+07:00","message":"validation"}
+{"level":"info","time":"2025-09-10T22:52:15+07:00","message":"food is added"}
+{"level":"info","time":"2025-09-10T22:52:27+07:00","message":"food is added"}
+{"level":"error","time":"2025-09-10T22:53:16+07:00","message":"ERROR: syntax error at or near \"images\" (SQLSTATE 42601)"}
+{"level":"info","time":"2025-09-10T23:53:32+07:00","message":"retrieve all locations"}
+{"level":"error","time":"2025-09-10T23:53:42+07:00","message":"no rows in result set"}
+{"level":"info","time":"2025-09-10T23:54:02+07:00","message":"retrieve all locations"}

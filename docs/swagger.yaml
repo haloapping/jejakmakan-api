@@ -1,10 +1,50 @@
 definitions:
+  api.MultipleDataResp-location_Location:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/location.Location'
+        type: array
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
   api.MultipleDataResp-owner_Owner:
     properties:
       data:
         items:
           $ref: '#/definitions/owner.Owner'
         type: array
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  api.SingleDataResp-food_Food:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/food.Food'
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+    required:
+    - data
+    - message
+    type: object
+  api.SingleDataResp-location_Location:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/location.Location'
         x-order: "2"
       message:
         type: string
@@ -51,6 +91,168 @@ definitions:
     required:
     - data
     - message
+    type: object
+  food.AddReq:
+    properties:
+      description:
+        type: string
+        x-order: "6"
+      images:
+        type: string
+        x-order: "4"
+      locationId:
+        type: string
+        x-order: "3"
+      name:
+        type: string
+        x-order: "5"
+      ownerId:
+        type: string
+        x-order: "2"
+      price:
+        type: integer
+        x-order: "7"
+      review:
+        type: string
+        x-order: "8"
+      userId:
+        type: string
+        x-order: "1"
+    required:
+    - description
+    - images
+    - locationId
+    - name
+    - ownerId
+    - price
+    - review
+    - userId
+    type: object
+  food.Food:
+    properties:
+      createdAt:
+        type: string
+        x-order: "10"
+      description:
+        type: string
+        x-order: "7"
+      id:
+        type: string
+        x-order: "1"
+      images:
+        type: string
+        x-order: "5"
+      locationId:
+        type: string
+        x-order: "4"
+      name:
+        type: string
+        x-order: "6"
+      ownerId:
+        type: string
+        x-order: "3"
+      price:
+        type: integer
+        x-order: "8"
+      review:
+        type: string
+        x-order: "9"
+      updatedAt:
+        type: string
+        x-order: "11"
+      userId:
+        type: string
+        x-order: "2"
+    required:
+    - createdAt
+    - description
+    - id
+    - images
+    - locationId
+    - name
+    - ownerId
+    - price
+    - review
+    - updatedAt
+    - userId
+    type: object
+  location.AddReq:
+    properties:
+      city:
+        type: string
+        x-order: "2"
+      details:
+        type: string
+        x-order: "5"
+      district:
+        type: string
+        x-order: "1"
+      postalCode:
+        type: string
+        x-order: "4"
+      province:
+        type: string
+        x-order: "3"
+    required:
+    - city
+    - details
+    - district
+    - postalCode
+    - province
+    type: object
+  location.Location:
+    properties:
+      city:
+        type: string
+        x-order: "3"
+      createdAt:
+        type: string
+        x-order: "7"
+      details:
+        type: string
+        x-order: "6"
+      district:
+        type: string
+        x-order: "2"
+      id:
+        type: string
+        x-order: "1"
+      postalCode:
+        type: string
+        x-order: "5"
+      province:
+        type: string
+        x-order: "4"
+      updatedAt:
+        type: string
+        x-order: "8"
+    required:
+    - city
+    - createdAt
+    - details
+    - district
+    - id
+    - postalCode
+    - province
+    - updatedAt
+    type: object
+  location.UpdateReq:
+    properties:
+      city:
+        type: string
+        x-order: "2"
+      details:
+        type: string
+        x-order: "5"
+      district:
+        type: string
+        x-order: "1"
+      postalCode:
+        type: string
+        x-order: "4"
+      province:
+        type: string
+        x-order: "3"
     type: object
   owner.AddReq:
     properties:
@@ -188,6 +390,149 @@ definitions:
 info:
   contact: {}
 paths:
+  /foods:
+    post:
+      consumes:
+      - application/json
+      description: Add new food
+      parameters:
+      - description: Add request
+        in: body
+        name: food
+        required: true
+        schema:
+          $ref: '#/definitions/food.AddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-food_Food'
+      summary: Add new food
+      tags:
+      - foods
+  /locations:
+    get:
+      consumes:
+      - application/json
+      description: Get all locations by id
+      parameters:
+      - description: location id
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: 1
+        description: offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 15
+        description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.MultipleDataResp-location_Location'
+      summary: Get all locations by id
+      tags:
+      - locations
+    post:
+      consumes:
+      - application/json
+      description: Add new location
+      parameters:
+      - description: Add request
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/location.AddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-location_Location'
+      summary: Add new location
+      tags:
+      - locations
+  /locations/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete location by id
+      parameters:
+      - description: location id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-location_Location'
+      summary: Delete location by id
+      tags:
+      - locations
+    get:
+      consumes:
+      - application/json
+      description: Get location by id
+      parameters:
+      - description: location id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-location_Location'
+      summary: Get location by id
+      tags:
+      - locations
+    patch:
+      consumes:
+      - application/json
+      description: Update location by id
+      parameters:
+      - description: location id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update request
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/location.UpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-location_Location'
+      summary: Update location by id
+      tags:
+      - locations
   /owners:
     post:
       consumes:

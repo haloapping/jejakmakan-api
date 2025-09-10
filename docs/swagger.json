@@ -4,6 +4,221 @@
         "contact": {}
     },
     "paths": {
+        "/foods": {
+            "post": {
+                "description": "Add new food",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Add new food",
+                "parameters": [
+                    {
+                        "description": "Add request",
+                        "name": "food",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/food.AddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-food_Food"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "description": "Get all locations by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "locations"
+                ],
+                "summary": "Get all locations by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "location id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 15,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.MultipleDataResp-location_Location"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add new location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "locations"
+                ],
+                "summary": "Add new location",
+                "parameters": [
+                    {
+                        "description": "Add request",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/location.AddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-location_Location"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations/{id}": {
+            "get": {
+                "description": "Get location by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "locations"
+                ],
+                "summary": "Get location by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "location id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-location_Location"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete location by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "locations"
+                ],
+                "summary": "Delete location by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "location id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-location_Location"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update location by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "locations"
+                ],
+                "summary": "Update location by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "location id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/location.UpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-location_Location"
+                        }
+                    }
+                }
+            }
+        },
         "/owners": {
             "post": {
                 "description": "Add new owner",
@@ -257,6 +472,26 @@
         }
     },
     "definitions": {
+        "api.MultipleDataResp-location_Location": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/location.Location"
+                    },
+                    "x-order": "2"
+                }
+            }
+        },
         "api.MultipleDataResp-owner_Owner": {
             "type": "object",
             "required": [
@@ -273,6 +508,48 @@
                     "items": {
                         "$ref": "#/definitions/owner.Owner"
                     },
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.SingleDataResp-food_Food": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/food.Food"
+                        }
+                    ],
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.SingleDataResp-location_Location": {
+            "type": "object",
+            "required": [
+                "data",
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "data": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/location.Location"
+                        }
+                    ],
                     "x-order": "2"
                 }
             }
@@ -337,6 +614,219 @@
                         }
                     ],
                     "x-order": "2"
+                }
+            }
+        },
+        "food.AddReq": {
+            "type": "object",
+            "required": [
+                "description",
+                "images",
+                "locationId",
+                "name",
+                "ownerId",
+                "price",
+                "review",
+                "userId"
+            ],
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "ownerId": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "locationId": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "description": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "price": {
+                    "type": "integer",
+                    "x-order": "7"
+                },
+                "review": {
+                    "type": "string",
+                    "x-order": "8"
+                }
+            }
+        },
+        "food.Food": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "images",
+                "locationId",
+                "name",
+                "ownerId",
+                "price",
+                "review",
+                "updatedAt",
+                "userId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "x-order": "10"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "x-order": "11"
+                },
+                "userId": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "ownerId": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "locationId": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "description": {
+                    "type": "string",
+                    "x-order": "7"
+                },
+                "price": {
+                    "type": "integer",
+                    "x-order": "8"
+                },
+                "review": {
+                    "type": "string",
+                    "x-order": "9"
+                }
+            }
+        },
+        "location.AddReq": {
+            "type": "object",
+            "required": [
+                "city",
+                "details",
+                "district",
+                "postalCode",
+                "province"
+            ],
+            "properties": {
+                "district": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "city": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "province": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "postalCode": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "details": {
+                    "type": "string",
+                    "x-order": "5"
+                }
+            }
+        },
+        "location.Location": {
+            "type": "object",
+            "required": [
+                "city",
+                "createdAt",
+                "details",
+                "district",
+                "id",
+                "postalCode",
+                "province",
+                "updatedAt"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "district": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "city": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "province": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "postalCode": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "details": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "x-order": "7"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "x-order": "8"
+                }
+            }
+        },
+        "location.UpdateReq": {
+            "type": "object",
+            "properties": {
+                "district": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "city": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "province": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "postalCode": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "details": {
+                    "type": "string",
+                    "x-order": "5"
                 }
             }
         },

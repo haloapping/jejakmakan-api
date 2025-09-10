@@ -4,7 +4,7 @@ export $(shell sed 's/=.*//' .env)
 
 # ===== DATABASE SEEDER ===== #
 dbseed:
-	go run db/seeder/seed.go --nuser=$(nuser) --ntask=$(ntask)
+	go run db/seeder/seed.go --nuser=$(nuser) --nowner=$(nowner) --nlocation=$(nlocation) --nfood=$(nfood)
 
 # ===== GOOSE DATABASE MIGRATIONS ===== #
 MIGRATIONS_DIR=./db/migration

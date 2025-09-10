@@ -21,6 +21,17 @@ CREATE TABLE owners(
     updated_at TIMESTAMPTZ DEFAULT NULL
 );
 
+CREATE TABLE owner_images(
+    id TEXT NOT NULL PRIMARY KEY,
+    owner_id TEXT NOT NULL,
+
+    images TEXT DEFAULT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NULL,
+
+     FOREIGN KEY(owner_id) REFERENCES owners(id)
+);
+
 CREATE TABLE locations(
     id TEXT NOT NULL PRIMARY KEY,
 
@@ -35,9 +46,9 @@ CREATE TABLE locations(
 
 CREATE TABLE foods(
     id TEXT NOT NULL PRIMARY KEY,
-    user_id TEXT NOT NULL UNIQUE,
-    owner_id TEXT NOT NULL UNIQUE,
-    location_id TEXT NOT NULL UNIQUE,
+    user_id TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    location_id TEXT NOT NULL,
 
     images TEXT DEFAULT NULL,
     name TEXT NOT NULL,
@@ -50,6 +61,17 @@ CREATE TABLE foods(
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(owner_id) REFERENCES owners(id),
     FOREIGN KEY(location_id) REFERENCES locations(id)
+);
+
+CREATE TABLE food_images(
+    id TEXT NOT NULL PRIMARY KEY,
+    food_id TEXT NOT NULL,
+
+    images TEXT DEFAULT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NULL,
+
+     FOREIGN KEY(food_id) REFERENCES foods(id)
 );
 
 CREATE TABLE food_stats(
@@ -74,7 +96,9 @@ CREATE TABLE food_stats(
 -- +goose StatementBegin
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS owners CASCADE;
+DROP TABLE IF EXISTS owner_images CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS foods CASCADE;
+DROP TABLE IF EXISTS food_images CASCADE;
 DROP TABLE IF EXISTS food_stats CASCADE;
 -- +goose StatementEnd
