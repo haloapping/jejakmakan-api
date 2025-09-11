@@ -62,18 +62,17 @@ func (h Handler) Add(c echo.Context) error {
 	)
 }
 
-// Get all locations by id
+// Get all locations
 //
-//	@Summary		Get all locations by id
-//	@Description	Get all locations by id
+//	@Summary		Get all locations
+//	@Description	Get all locations
 //	@Tags			locations
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string	true	"location id"
-//	@Param			offset		query		int		true	"offset"	default(1)
-//	@Param			limit		query		int		true	"limit"		default(15)
+//	@Param			offset		query		int	true	"offset"	default(1)
+//	@Param			limit		query		int	true	"limit"		default(15)
 //	@Success		200			{object}	api.MultipleDataResp[Location]
-//	@Router			/locations 									[get]
+//	@Router			/locations 											[get]
 func (h Handler) GetAll(c echo.Context) error {
 	l, err := h.Service.GetAll(c)
 	if err != nil {

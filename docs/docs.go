@@ -51,7 +51,7 @@ const docTemplate = `{
         },
         "/locations": {
             "get": {
-                "description": "Get all locations by id",
+                "description": "Get all locations",
                 "consumes": [
                     "application/json"
                 ],
@@ -61,15 +61,8 @@ const docTemplate = `{
                 "tags": [
                     "locations"
                 ],
-                "summary": "Get all locations by id",
+                "summary": "Get all locations",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "location id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -367,7 +360,7 @@ const docTemplate = `{
         },
         "/owners/{userId}": {
             "get": {
-                "description": "Get all owners by owner id",
+                "description": "Get all owners",
                 "consumes": [
                     "application/json"
                 ],
@@ -377,15 +370,8 @@ const docTemplate = `{
                 "tags": [
                     "owners"
                 ],
-                "summary": "Get all owners by owner id",
+                "summary": "Get all owners",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "owner id",
-                        "name": "userId",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "type": "integer",
                         "default": 1,

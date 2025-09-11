@@ -416,13 +416,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get all locations by id
+      description: Get all locations
       parameters:
-      - description: location id
-        in: path
-        name: id
-        required: true
-        type: string
       - default: 1
         description: offset
         in: query
@@ -442,7 +437,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.MultipleDataResp-location_Location'
-      summary: Get all locations by id
+      summary: Get all locations
       tags:
       - locations
     post:
@@ -626,13 +621,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get all owners by owner id
+      description: Get all owners
       parameters:
-      - description: owner id
-        in: path
-        name: userId
-        required: true
-        type: string
       - default: 1
         description: offset
         in: query
@@ -652,7 +642,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.MultipleDataResp-owner_Owner'
-      summary: Get all owners by owner id
+      summary: Get all owners
       tags:
       - owners
   /users/login:
