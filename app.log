@@ -138,3 +138,5 @@
 {"level":"info","time":"2025-09-10T23:53:32+07:00","message":"retrieve all locations"}
 {"level":"error","time":"2025-09-10T23:53:42+07:00","message":"no rows in result set"}
 {"level":"info","time":"2025-09-10T23:54:02+07:00","message":"retrieve all locations"}
+{"level":"error","time":"2025-09-11T20:15:46+07:00","message":"no rows in result set"}
+{"level":"info","time":"2025-09-11T20:18:33+07:00","message":"retrieve all locations"}

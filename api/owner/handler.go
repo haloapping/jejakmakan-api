@@ -62,16 +62,15 @@ func (h Handler) Add(c echo.Context) error {
 	)
 }
 
-// Get all owners by owner id
+// Get all owners
 //
-//	@Summary		Get all owners by owner id
-//	@Description	Get all owners by owner id
+//	@Summary		Get all owners
+//	@Description	Get all owners
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
-//	@Param			userId				path		string	true	"owner id"
-//	@Param			offset				query		int		true	"offset"	default(1)
-//	@Param			limit				query		int		true	"limit"		default(15)
+//	@Param			offset				query		int	true	"offset"	default(1)
+//	@Param			limit				query		int	true	"limit"		default(15)
 //	@Success		200					{object}	api.MultipleDataResp[Owner]
 //	@Router			/owners/{userId} 	[get]
 func (h Handler) GetAll(c echo.Context) error {

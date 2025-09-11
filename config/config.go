@@ -27,3 +27,13 @@ func DBConnStr(envName string) string {
 
 	return connStr
 }
+
+func APIUrl(envName string) string {
+	_ = fmt.Sprintf("../%s", envName)
+	err := godotenv.Load(fmt.Sprintf("./%s", envName))
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	return os.Getenv("API_URL")
+}

@@ -70,5 +70,5 @@ func main() {
 		return c.HTML(http.StatusOK, htmlContent)
 	})
 
-	r.Start(":3000")
+	r.Start(config.APIUrl(".env"))
 }
