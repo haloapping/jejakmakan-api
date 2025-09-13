@@ -5,10 +5,6 @@ import (
 	"net/http"
 
 	"github.com/MarceloPetrucio/go-scalar-api-reference"
-	"github.com/haloapping/jejakmakan-api/api/food"
-	"github.com/haloapping/jejakmakan-api/api/location"
-	"github.com/haloapping/jejakmakan-api/api/owner"
-	"github.com/haloapping/jejakmakan-api/api/user"
 	"github.com/haloapping/jejakmakan-api/config"
 	"github.com/haloapping/jejakmakan-api/db"
 	customMiddleware "github.com/haloapping/jejakmakan-api/middleware"
@@ -31,26 +27,7 @@ func main() {
 	// routing
 	r := echo.New()
 	customMiddleware.EchoLogger(r)
-
-	userRepo := user.NewRepository(pool)
-	userService := user.NewService(userRepo)
-	userHandler := user.NewHandler(userService)
-	user.Router(r.Group("/users"), userHandler)
-
-	ownerRepo := owner.NewRepository(pool)
-	ownerService := owner.NewService(ownerRepo)
-	ownerHandler := owner.NewHandler(ownerService)
-	owner.Router(r.Group("/owners"), ownerHandler)
-
-	locationRepo := location.NewRepository(pool)
-	locationService := location.NewService(locationRepo)
-	locationHandler := location.NewHandler(locationService)
-	location.Router(r.Group("/locations"), locationHandler)
-
-	foodRepo := food.NewRepository(pool)
-	foodService := food.NewService(foodRepo)
-	foodHandler := food.NewHandler(foodService)
-	food.Router(r.Group("/foods"), foodHandler)
+	Router(pool, r)
 
 	r.GET("/", func(c echo.Context) error {
 		htmlContent, err := scalar.ApiReferenceHTML(&scalar.Options{

@@ -2,6 +2,19 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+# ===== BUILD ===== #
+# linux amd64
+buildlinux:
+	GOOS=linux  GOARCH=amd64  go build -ldflags="-s -s" -o build/jejakmakan-api-linux .
+
+# windows amd64 (note .exe)
+buildwin:
+	GOOS=windows GOARCH=amd64 go build -ldflags="-s -s" -o build/jejakmakan-api-win .
+
+# macOS arm64
+builddarwin:
+	GOOS=darwin  GOARCH=arm64  go build -ldflags="-s -s" -o build/jejakmakan-api-darwin .
+
 # ===== DATABASE SEEDER ===== #
 dbseed:
 	go run db/seeder/seed.go --nuser=$(nuser) --nowner=$(nowner) --nlocation=$(nlocation) --nfood=$(nfood)
@@ -9,7 +22,7 @@ dbseed:
 # ===== GOOSE DATABASE MIGRATIONS ===== #
 MIGRATIONS_DIR=./db/migration
 DB_DRIVER=postgres
-DB_URL=postgres://postgres:$(DB_USER)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=$(DB_SSL_MODE)
+DB_URL=postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=$(DB_SSL_MODE)
 
 # create new migration
 # usage: make dbcreate name=create_users_table

@@ -2,6 +2,7 @@ package owner
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/haloapping/jejakmakan-api/api"
 	"github.com/labstack/echo/v4"
@@ -69,12 +70,40 @@ func (h Handler) Add(c echo.Context) error {
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
-//	@Param			offset				query		int	true	"offset"	default(1)
-//	@Param			limit				query		int	true	"limit"		default(15)
-//	@Success		200					{object}	api.MultipleDataResp[Owner]
-//	@Router			/owners/{userId} 	[get]
+//	@Param			offset		query		int	true	"offset"	default(1)
+//	@Param			limit		query		int	true	"limit"		default(15)
+//	@Success		200			{object}	api.MultipleDataResp[Owner]
+//	@Router			/owners 	[get]
 func (h Handler) GetAll(c echo.Context) error {
-	owners, err := h.Service.GetAll(c)
+	validation := make(map[string][]string)
+	limit := c.QueryParam("limit")
+	if limit == "" {
+		validation["limit"] = append(validation["limit"], "cannot empty")
+	}
+	offset := c.QueryParam("offset")
+	if offset == "" {
+		validation["offset"] = append(validation["offset"], "cannot empty")
+	}
+	if len(validation) > 0 {
+		zlog.Info().Interface("validation", validation).Msg("validation")
+
+		return api.ValidationResponse(c, http.StatusBadRequest, validation)
+	}
+
+	limitInt, err := strconv.Atoi(limit)
+	if err != nil {
+		zlog.Error().Msg(err.Error())
+
+		return api.ErrorResponse(c, http.StatusBadRequest, err)
+	}
+	offsetInt, err := strconv.Atoi(offset)
+	if err != nil {
+		zlog.Error().Msg(err.Error())
+
+		return api.ErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	owners, err := h.Service.GetAll(c, limitInt, offsetInt)
 	if err != nil {
 		zlog.Error().Msg(err.Error())
 

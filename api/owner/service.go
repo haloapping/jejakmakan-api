@@ -1,6 +1,8 @@
 package owner
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+)
 
 type Service struct {
 	Repository
@@ -21,8 +23,8 @@ func (s Service) Add(c echo.Context, req AddReq) (Owner, error) {
 	return o, nil
 }
 
-func (s Service) GetAll(c echo.Context) ([]Owner, error) {
-	owners, err := s.Repository.GetAll(c)
+func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Owner, error) {
+	owners, err := s.Repository.GetAll(c, limit, offset)
 	if err != nil {
 		return []Owner{}, err
 	}

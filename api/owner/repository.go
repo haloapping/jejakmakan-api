@@ -50,7 +50,7 @@ func (r Repository) Add(c echo.Context, req AddReq) (Owner, error) {
 	return o, nil
 }
 
-func (r Repository) GetAll(c echo.Context) ([]Owner, error) {
+func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, error) {
 	ctx := c.Request().Context()
 	tx, err := r.Pool.Begin(ctx)
 	if err != nil {
@@ -61,9 +61,14 @@ func (r Repository) GetAll(c echo.Context) ([]Owner, error) {
 
 	q := `
 		SELECT COUNT(id)
-		FROM owners;
+		FROM (
+			SELECT id
+			FROM owners
+			LIMIT $1
+			OFFSET $2
+		);
 	`
-	row := tx.QueryRow(ctx, q)
+	row := tx.QueryRow(ctx, q, limit, offset)
 	var count int
 	err = row.Scan(&count)
 	if err != nil {
@@ -74,19 +79,24 @@ func (r Repository) GetAll(c echo.Context) ([]Owner, error) {
 
 	q = `
 		SELECT *
-		FROM owners;
+		FROM owners
+		LIMIT $1
+		OFFSET $2;
 	`
-	rows, err := tx.Query(ctx, q)
+	rows, err := tx.Query(ctx, q, limit, offset)
 	if err != nil {
 		tx.Rollback(ctx)
 
 		return []Owner{}, err
 	}
+	if limit > count {
+		limit = count
+	}
 	idx := 0
 	owners := make([]Owner, count)
 	for rows.Next() {
 		var o Owner
-		err = row.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
+		err = rows.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
 		if err != nil {
 			tx.Rollback(ctx)
 
