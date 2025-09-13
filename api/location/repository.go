@@ -77,7 +77,7 @@ func (r Repository) GetById(c echo.Context, id string) (Location, error) {
 	return l, nil
 }
 
-func (r Repository) GetAll(c echo.Context) ([]Location, error) {
+func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, error) {
 	ctx := c.Request().Context()
 	tx, err := r.Pool.Begin(ctx)
 	if err != nil {
@@ -87,10 +87,15 @@ func (r Repository) GetAll(c echo.Context) ([]Location, error) {
 	}
 
 	q := `
-		SELECT COUNT(*)
-		FROM locations;
+		SELECT COUNT(id)
+		FROM (
+			SELECT id
+			FROM locations
+			LIMIT $1
+			OFFSET $2
+		);
 	`
-	row := tx.QueryRow(ctx, q)
+	row := tx.QueryRow(ctx, q, limit, offset)
 	var count int
 	err = row.Scan(&count)
 	if err != nil {
@@ -101,13 +106,19 @@ func (r Repository) GetAll(c echo.Context) ([]Location, error) {
 
 	q = `
 		SELECT *
-		FROM locations;
+		FROM locations
+		LIMIT $1
+		OFFSET $2;
 	`
-	rows, err := tx.Query(ctx, q)
+	rows, err := tx.Query(ctx, q, limit, offset)
 	if err != nil {
 		tx.Rollback(ctx)
 
 		return []Location{}, err
+	}
+
+	if limit > count {
+		limit = count
 	}
 	idx := 0
 	locations := make([]Location, count)
@@ -122,6 +133,8 @@ func (r Repository) GetAll(c echo.Context) ([]Location, error) {
 		locations[idx] = l
 		idx++
 	}
+
+	fmt.Println(locations)
 
 	return locations, nil
 }

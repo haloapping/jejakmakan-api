@@ -21,8 +21,8 @@ func (s Service) Add(c echo.Context, req AddReq) (Location, error) {
 	return l, nil
 }
 
-func (s Service) GetAll(c echo.Context) ([]Location, error) {
-	locations, err := s.Repository.GetAll(c)
+func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Location, error) {
+	locations, err := s.Repository.GetAll(c, limit, offset)
 	if err != nil {
 		return []Location{}, err
 	}
