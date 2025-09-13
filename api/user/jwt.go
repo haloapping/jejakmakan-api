@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -14,7 +15,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(userId string, username string, jwtSecret string, expiresAt time.Duration) (string, error) {
+func GenerateToken(userId string, username string) (string, error) {
 	claims := Claims{
 		Id:       userId,
 		Username: username,
@@ -22,12 +23,13 @@ func GenerateToken(userId string, username string, jwtSecret string, expiresAt t
 			Issuer:    "jejakmakan",
 			Subject:   userId,
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiresAt)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
 			ID:        fmt.Sprintf("%d", time.Now().UnixNano()),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	jwtSecret := os.Getenv("JWT_SECRET_KEY")
 
 	return token.SignedString([]byte(jwtSecret))
 }

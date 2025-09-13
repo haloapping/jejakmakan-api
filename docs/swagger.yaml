@@ -409,6 +409,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-food_Food'
+      security:
+      - BearerAuth: []
       summary: Add new food
       tags:
       - foods
@@ -437,6 +439,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.MultipleDataResp-location_Location'
+      security:
+      - BearerAuth: []
       summary: Get all locations
       tags:
       - locations
@@ -479,6 +483,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-location_Location'
+      security:
+      - BearerAuth: []
       summary: Delete location by id
       tags:
       - locations
@@ -499,6 +505,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-location_Location'
+      security:
+      - BearerAuth: []
       summary: Get location by id
       tags:
       - locations
@@ -525,6 +533,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-location_Location'
+      security:
+      - BearerAuth: []
       summary: Update location by id
       tags:
       - locations
@@ -553,6 +563,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.MultipleDataResp-owner_Owner'
+      security:
+      - BearerAuth: []
       summary: Get all owners
       tags:
       - owners
@@ -595,6 +607,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      security:
+      - BearerAuth: []
       summary: Delete owner by id
       tags:
       - owners
@@ -615,6 +629,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      security:
+      - BearerAuth: []
       summary: Get owner by id
       tags:
       - owners
@@ -641,6 +657,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-owner_Owner'
+      security:
+      - BearerAuth: []
       summary: Update owner by id
       tags:
       - owners
@@ -663,6 +681,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-user_UserLogin'
+      security:
+      - BearerAuth: []
       summary: Login user
       tags:
       - users
@@ -685,7 +705,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.SingleDataResp-user_UserRegister'
+      security:
+      - BearerAuth: []
       summary: Register user
       tags:
       - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

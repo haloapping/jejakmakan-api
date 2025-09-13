@@ -25,6 +25,7 @@ func NewHandler(s Service) Handler {
 //	@Tags			foods
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			food		body		AddReq	true	"Add request"
 //	@Success		200			{object}	api.SingleDataResp[Food]
 //	@Router			/foods   	[post]

@@ -38,6 +38,8 @@ func (r Repository) Add(c echo.Context, req AddReq) (Owner, error) {
 		q,
 		ulid.Make().String(), req.Images, req.Name,
 	)
+	c.Set("query", q)
+	c.Set("queryArgs", []interface{}{req.Name, req.Images})
 	var o Owner
 	err = row.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
 	if err != nil {
@@ -69,6 +71,8 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 		);
 	`
 	row := tx.QueryRow(ctx, q, limit, offset)
+	c.Set("query", q)
+	c.Set("query-args", []int{limit, offset})
 	var count int
 	err = row.Scan(&count)
 	if err != nil {
@@ -83,6 +87,8 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 		LIMIT $1
 		OFFSET $2;
 	`
+	c.Set("query", q)
+	c.Set("queryArgs", []int{limit, offset})
 	rows, err := tx.Query(ctx, q, limit, offset)
 	if err != nil {
 		tx.Rollback(ctx)
@@ -124,6 +130,8 @@ func (r Repository) GetById(c echo.Context, id string) (Owner, error) {
 		WHERE id = $1;
 	`
 	row := tx.QueryRow(ctx, q, id)
+	c.Set("query", q)
+	c.Set("queryArgs", id)
 	var o Owner
 	err = row.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
 	if err != nil {
@@ -168,6 +176,8 @@ func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Owner,
 		strings.Join(columnArgs, ", "),
 		argPos,
 	)
+	c.Set("query", q)
+	c.Set("queryArgs", []interface{}{req.Images, req.Name})
 	row := tx.QueryRow(ctx, q, columnValues...)
 	var o Owner
 	err = row.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
@@ -196,6 +206,8 @@ func (r Repository) DeleteById(c echo.Context, id string) (Owner, error) {
 		RETURNING *;
 	`
 	row := tx.QueryRow(ctx, q, id)
+	c.Set("query", q)
+	c.Set("queryArgs", id)
 	var o Owner
 	err = row.Scan(&o.Id, &o.Images, &o.Name, &o.CreatedAt, &o.UpdatedAt)
 	if err != nil {

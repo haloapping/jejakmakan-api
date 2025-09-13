@@ -25,6 +25,7 @@ func NewHandler(s Service) Handler {
 //	@Tags			users
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			register			user		body	UserRegisterReq	true	"Register user request"
 //	@Success		200					{object}	api.SingleDataResp[UserRegister]
 //	@Router			/users/register   	[post]
@@ -69,6 +70,7 @@ func (h Handler) Register(c echo.Context) error {
 //	@Tags			users
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			login			user		body	UserLoginReq	true	"Login user request"
 //	@Success		200				{object}	api.SingleDataResp[UserLogin]
 //	@Router			/users/login   	[post]
@@ -89,13 +91,25 @@ func (h *Handler) Login(c echo.Context) error {
 	}
 
 	ul, err := h.Service.Login(c, reqBody)
-
-	zlog.Info().Msg("login is successfully")
 	if err != nil {
 		zlog.Error().Msg(err.Error())
 
 		return api.ErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	return c.JSON(http.StatusOK, ul)
+	token, err := GenerateToken(ul.Id, ul.Username)
+	if err != nil {
+		zlog.Error().Msg(err.Error())
+
+		return api.ErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	zlog.Info().Msg("login is successfully")
+
+	return c.JSON(
+		http.StatusOK,
+		map[string]string{
+			"token": token,
+		},
+	)
 }

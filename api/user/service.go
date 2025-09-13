@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -38,7 +40,7 @@ func (s Service) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(items.Password), []byte(req.Password))
 	if err != nil {
-		return UserLogin{}, err
+		return UserLogin{}, fmt.Errorf("invalid username or password")
 	}
 
 	return items, nil

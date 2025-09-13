@@ -6,6 +6,11 @@
     "paths": {
         "/foods": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Add new food",
                 "consumes": [
                     "application/json"
@@ -40,6 +45,11 @@
         },
         "/locations": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all locations",
                 "consumes": [
                     "application/json"
@@ -113,6 +123,11 @@
         },
         "/locations/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get location by id",
                 "consumes": [
                     "application/json"
@@ -143,6 +158,11 @@
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete location by id",
                 "consumes": [
                     "application/json"
@@ -173,6 +193,11 @@
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update location by id",
                 "consumes": [
                     "application/json"
@@ -214,6 +239,11 @@
         },
         "/owners": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all owners",
                 "consumes": [
                     "application/json"
@@ -287,6 +317,11 @@
         },
         "/owners/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get owner by id",
                 "consumes": [
                     "application/json"
@@ -317,6 +352,11 @@
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete owner by id",
                 "consumes": [
                     "application/json"
@@ -347,6 +387,11 @@
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update owner by id",
                 "consumes": [
                     "application/json"
@@ -388,6 +433,11 @@
         },
         "/users/login": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Login user",
                 "consumes": [
                     "application/json"
@@ -422,6 +472,11 @@
         },
         "/users/register": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Register user",
                 "consumes": [
                     "application/json"
@@ -993,6 +1048,13 @@
                     "x-order": "6"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

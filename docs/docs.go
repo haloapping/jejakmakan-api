@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/foods": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Add new food",
                 "consumes": [
                     "application/json"
@@ -51,6 +56,11 @@ const docTemplate = `{
         },
         "/locations": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all locations",
                 "consumes": [
                     "application/json"
@@ -124,6 +134,11 @@ const docTemplate = `{
         },
         "/locations/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get location by id",
                 "consumes": [
                     "application/json"
@@ -154,6 +169,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete location by id",
                 "consumes": [
                     "application/json"
@@ -184,6 +204,11 @@ const docTemplate = `{
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update location by id",
                 "consumes": [
                     "application/json"
@@ -225,6 +250,11 @@ const docTemplate = `{
         },
         "/owners": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all owners",
                 "consumes": [
                     "application/json"
@@ -298,6 +328,11 @@ const docTemplate = `{
         },
         "/owners/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get owner by id",
                 "consumes": [
                     "application/json"
@@ -328,6 +363,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete owner by id",
                 "consumes": [
                     "application/json"
@@ -358,6 +398,11 @@ const docTemplate = `{
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update owner by id",
                 "consumes": [
                     "application/json"
@@ -399,6 +444,11 @@ const docTemplate = `{
         },
         "/users/login": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Login user",
                 "consumes": [
                     "application/json"
@@ -433,6 +483,11 @@ const docTemplate = `{
         },
         "/users/register": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Register user",
                 "consumes": [
                     "application/json"
@@ -1004,6 +1059,13 @@ const docTemplate = `{
                     "x-order": "6"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

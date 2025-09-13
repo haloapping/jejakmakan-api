@@ -70,6 +70,7 @@ func (h Handler) Add(c echo.Context) error {
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			offset		query		int	true	"offset"	default(1)
 //	@Param			limit		query		int	true	"limit"		default(15)
 //	@Success		200			{object}	api.MultipleDataResp[Owner]
@@ -128,6 +129,7 @@ func (h Handler) GetAll(c echo.Context) error {
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			id				path		string	true	"owner id"
 //	@Success		200				{object}	api.SingleDataResp[Owner]
 //	@Router			/owners/{id} 	[get]
@@ -165,6 +167,7 @@ func (h Handler) GetById(c echo.Context) error {
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			id				path		string		true	"owner id"
 //	@Param			owner			body		UpdateReq	true	"Update request"
 //	@Success		200				{object}	api.SingleDataResp[Owner]
@@ -211,6 +214,7 @@ func (h Handler) UpdateById(c echo.Context) error {
 //	@Tags			owners
 //	@Accept			json
 //	@Produce		json
+//	@Security		BearerAuth
 //	@Param			id				path		string	true	"owner id"
 //	@Success		200				{object}	api.SingleDataResp[Owner]
 //	@Router			/owners/{id} 	[delete]

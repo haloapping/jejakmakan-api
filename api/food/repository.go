@@ -27,7 +27,7 @@ func (r Repository) Add(c echo.Context, req AddReq) (Food, error) {
 	}
 
 	q := `
-		INSERT INTO foods(id, user_id, owner_id, location_id images, name, description, price, review)
+		INSERT INTO foods(id, user_id, owner_id, location_id,images, name, description, price, review)
 		VALUES(@id, @user_id, @owner_id, @location_id, @images, @name, @description, @price, @review)
 		RETURNING *;
 	`
@@ -46,6 +46,8 @@ func (r Repository) Add(c echo.Context, req AddReq) (Food, error) {
 			"review":      req.Review,
 		},
 	)
+	c.Set("query", q)
+	c.Set("queryArgs", req)
 	var f Food
 	err = row.Scan(
 		&f.Id, &f.UserId, &f.OwnerId, &f.LocationId,

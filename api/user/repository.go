@@ -57,11 +57,13 @@ func (r Repository) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 	}
 
 	q := `
-		SELECT id, username, password
+		SELECT id, username
 		FROM users
 		WHERE username = $1;
 	`
 	row := tx.QueryRow(ctx, q, req.Username)
+	c.Set("query", q)
+	c.Set("queryArgs", req)
 	var ul UserLogin
 	err = row.Scan(&ul.Id, &ul.Username, &ul.Password)
 	if err != nil {
@@ -89,6 +91,8 @@ func (r Repository) Biodata(c echo.Context, username string) (UserBiodata, error
 		WHERE username = $1;
 	`
 	row := tx.QueryRow(ctx, q, username)
+	c.Set("query", q)
+	c.Set("queryArgs", username)
 	var ub UserBiodata
 	err = row.Scan(&ub.Id, &ub.ProfilePicture, &ub.Username, &ub.Password, &ub.Email, &ub.Fullname)
 	if err != nil {
