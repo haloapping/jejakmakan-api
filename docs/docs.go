@@ -65,17 +65,17 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "default": 1,
-                        "description": "offset",
-                        "name": "offset",
+                        "default": 15,
+                        "description": "limit",
+                        "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "default": 15,
-                        "description": "limit",
-                        "name": "limit",
+                        "default": 1,
+                        "description": "offset",
+                        "name": "offset",
                         "in": "query",
                         "required": true
                     }
@@ -224,6 +224,45 @@ const docTemplate = `{
             }
         },
         "/owners": {
+            "get": {
+                "description": "Get all owners",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owners"
+                ],
+                "summary": "Get all owners",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 15,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.MultipleDataResp-owner_Owner"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Add new owner",
                 "consumes": [
@@ -353,47 +392,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/api.SingleDataResp-owner_Owner"
-                        }
-                    }
-                }
-            }
-        },
-        "/owners/{userId}": {
-            "get": {
-                "description": "Get all owners",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "owners"
-                ],
-                "summary": "Get all owners",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "offset",
-                        "name": "offset",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "default": 15,
-                        "description": "limit",
-                        "name": "limit",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.MultipleDataResp-owner_Owner"
                         }
                     }
                 }

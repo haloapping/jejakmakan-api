@@ -418,16 +418,16 @@ paths:
       - application/json
       description: Get all locations
       parameters:
-      - default: 1
-        description: offset
-        in: query
-        name: offset
-        required: true
-        type: integer
       - default: 15
         description: limit
         in: query
         name: limit
+        required: true
+        type: integer
+      - default: 1
+        description: offset
+        in: query
+        name: offset
         required: true
         type: integer
       produces:
@@ -529,6 +529,33 @@ paths:
       tags:
       - locations
   /owners:
+    get:
+      consumes:
+      - application/json
+      description: Get all owners
+      parameters:
+      - default: 1
+        description: offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - default: 15
+        description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.MultipleDataResp-owner_Owner'
+      summary: Get all owners
+      tags:
+      - owners
     post:
       consumes:
       - application/json
@@ -615,34 +642,6 @@ paths:
           schema:
             $ref: '#/definitions/api.SingleDataResp-owner_Owner'
       summary: Update owner by id
-      tags:
-      - owners
-  /owners/{userId}:
-    get:
-      consumes:
-      - application/json
-      description: Get all owners
-      parameters:
-      - default: 1
-        description: offset
-        in: query
-        name: offset
-        required: true
-        type: integer
-      - default: 15
-        description: limit
-        in: query
-        name: limit
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.MultipleDataResp-owner_Owner'
-      summary: Get all owners
       tags:
       - owners
   /users/login:
