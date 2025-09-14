@@ -1,6 +1,5 @@
 # Load variables from .env
-include .env
-export $(shell sed 's/=.*//' .env)
+export $(shell doppler secrets download --no-file --format env)
 
 # ===== BUILD ===== #
 # linux amd64
