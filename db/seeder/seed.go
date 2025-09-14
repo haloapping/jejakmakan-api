@@ -7,7 +7,6 @@ import (
 	"math/rand/v2"
 
 	"github.com/brianvoe/gofakeit/v7"
-	"github.com/haloapping/jejakmakan-api/config"
 	"github.com/haloapping/jejakmakan-api/db"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -16,8 +15,23 @@ import (
 )
 
 func main() {
-	connStr := config.DBConnStr(".env")
-	pool := db.NewConnection(connStr)
+	// conn string
+	connStr, err := db.ConnDBStr(".env")
+	if err != nil {
+		panic(err)
+	}
+
+	// setup config
+	dbconfig, err := db.NewDBConfig(connStr)
+	if err != nil {
+		panic(err)
+	}
+
+	// initiate database pooling
+	pool, err := db.NewDBPool(dbconfig)
+	if err != nil {
+		panic(err)
+	}
 	defer pool.Close()
 
 	nUser := flag.Int("nuser", 10, "number of user")
@@ -27,7 +41,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("Seed on progress... 🌱")
-	err := GenerateFakeData(context.Background(), pool, *nUser, *nOwner, *nLocation, *nFood)
+	err = GenerateFakeData(context.Background(), pool, *nUser, *nOwner, *nLocation, *nFood)
 	if err != nil {
 		panic(err)
 	}

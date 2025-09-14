@@ -23,13 +23,13 @@ func (s Service) Add(c echo.Context, req AddReq) (Owner, error) {
 	return o, nil
 }
 
-func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Owner, error) {
-	owners, err := s.Repository.GetAll(c, limit, offset)
+func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Owner, int, error) {
+	owners, total, err := s.Repository.GetAll(c, limit, offset)
 	if err != nil {
-		return []Owner{}, err
+		return []Owner{}, 0, err
 	}
 
-	return owners, nil
+	return owners, total, nil
 }
 
 func (s Service) GetById(c echo.Context, id string) (Owner, error) {

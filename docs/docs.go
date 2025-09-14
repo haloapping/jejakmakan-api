@@ -16,7 +16,56 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/foods": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get all foods",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Get all foods",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 15,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.MultipleDataResp-food_Food"
+                        }
+                    }
+                }
+            },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Add new food",
                 "consumes": [
                     "application/json"
@@ -43,6 +92,122 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-food_AddFood"
+                        }
+                    }
+                }
+            }
+        },
+        "/foods/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get food by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Get food by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "food id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-food_Food"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete food by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Delete food by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "food id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.SingleDataResp-food_Food"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update food by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Update food by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "food id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request",
+                        "name": "food",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/food.UpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
                             "$ref": "#/definitions/api.SingleDataResp-food_Food"
                         }
                     }
@@ -51,6 +216,11 @@ const docTemplate = `{
         },
         "/locations": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all locations",
                 "consumes": [
                     "application/json"
@@ -124,6 +294,11 @@ const docTemplate = `{
         },
         "/locations/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get location by id",
                 "consumes": [
                     "application/json"
@@ -154,6 +329,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete location by id",
                 "consumes": [
                     "application/json"
@@ -184,6 +364,11 @@ const docTemplate = `{
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update location by id",
                 "consumes": [
                     "application/json"
@@ -225,6 +410,11 @@ const docTemplate = `{
         },
         "/owners": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all owners",
                 "consumes": [
                     "application/json"
@@ -298,6 +488,11 @@ const docTemplate = `{
         },
         "/owners/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get owner by id",
                 "consumes": [
                     "application/json"
@@ -328,6 +523,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete owner by id",
                 "consumes": [
                     "application/json"
@@ -358,6 +558,11 @@ const docTemplate = `{
                 }
             },
             "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update owner by id",
                 "consumes": [
                     "application/json"
@@ -399,6 +604,11 @@ const docTemplate = `{
         },
         "/users/login": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Login user",
                 "consumes": [
                     "application/json"
@@ -433,6 +643,11 @@ const docTemplate = `{
         },
         "/users/register": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Register user",
                 "consumes": [
                     "application/json"
@@ -467,16 +682,54 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api.MultipleDataResp-location_Location": {
+        "api.MultipleDataResp-food_Food": {
             "type": "object",
             "required": [
                 "data",
-                "message"
+                "message",
+                "pagination"
             ],
             "properties": {
                 "message": {
                     "type": "string",
                     "x-order": "1"
+                },
+                "pagination": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Pagination"
+                        }
+                    ],
+                    "x-order": "2"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/food.Food"
+                    },
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.MultipleDataResp-location_Location": {
+            "type": "object",
+            "required": [
+                "data",
+                "message",
+                "pagination"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "pagination": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Pagination"
+                        }
+                    ],
+                    "x-order": "2"
                 },
                 "data": {
                     "type": "array",
@@ -491,6 +744,62 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "data",
+                "message",
+                "pagination"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "pagination": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Pagination"
+                        }
+                    ],
+                    "x-order": "2"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/owner.Owner"
+                    },
+                    "x-order": "2"
+                }
+            }
+        },
+        "api.Pagination": {
+            "type": "object",
+            "required": [
+                "page",
+                "pageSize",
+                "totalItem",
+                "totalPage"
+            ],
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "x-order": "1"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "x-order": "2"
+                },
+                "totalPage": {
+                    "type": "integer",
+                    "x-order": "3"
+                },
+                "totalItem": {
+                    "type": "integer",
+                    "x-order": "4"
+                }
+            }
+        },
+        "api.SingleDataResp-food_AddFood": {
+            "type": "object",
+            "required": [
+                "data",
                 "message"
             ],
             "properties": {
@@ -499,10 +808,11 @@ const docTemplate = `{
                     "x-order": "1"
                 },
                 "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/owner.Owner"
-                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/food.AddFood"
+                        }
+                    ],
                     "x-order": "2"
                 }
             }
@@ -612,54 +922,7 @@ const docTemplate = `{
                 }
             }
         },
-        "food.AddReq": {
-            "type": "object",
-            "required": [
-                "description",
-                "images",
-                "locationId",
-                "name",
-                "ownerId",
-                "price",
-                "review",
-                "userId"
-            ],
-            "properties": {
-                "userId": {
-                    "type": "string",
-                    "x-order": "1"
-                },
-                "ownerId": {
-                    "type": "string",
-                    "x-order": "2"
-                },
-                "locationId": {
-                    "type": "string",
-                    "x-order": "3"
-                },
-                "images": {
-                    "type": "string",
-                    "x-order": "4"
-                },
-                "name": {
-                    "type": "string",
-                    "x-order": "5"
-                },
-                "description": {
-                    "type": "string",
-                    "x-order": "6"
-                },
-                "price": {
-                    "type": "integer",
-                    "x-order": "7"
-                },
-                "review": {
-                    "type": "string",
-                    "x-order": "8"
-                }
-            }
-        },
-        "food.Food": {
+        "food.AddFood": {
             "type": "object",
             "required": [
                 "createdAt",
@@ -718,6 +981,162 @@ const docTemplate = `{
                 "review": {
                     "type": "string",
                     "x-order": "9"
+                }
+            }
+        },
+        "food.AddReq": {
+            "type": "object",
+            "required": [
+                "description",
+                "images",
+                "locationId",
+                "name",
+                "ownerId",
+                "price",
+                "review",
+                "userId"
+            ],
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "ownerId": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "locationId": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "description": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "price": {
+                    "type": "integer",
+                    "x-order": "7"
+                },
+                "review": {
+                    "type": "string",
+                    "x-order": "8"
+                }
+            }
+        },
+        "food.Food": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "description",
+                "id",
+                "images",
+                "location",
+                "name",
+                "ownername",
+                "price",
+                "review",
+                "updatedAt",
+                "username"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "x-order": "10"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "x-order": "11"
+                },
+                "username": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "ownername": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "location": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "description": {
+                    "type": "string",
+                    "x-order": "7"
+                },
+                "price": {
+                    "type": "integer",
+                    "x-order": "8"
+                },
+                "review": {
+                    "type": "string",
+                    "x-order": "9"
+                }
+            }
+        },
+        "food.UpdateReq": {
+            "type": "object",
+            "required": [
+                "description",
+                "images",
+                "locationId",
+                "name",
+                "ownerId",
+                "price",
+                "review",
+                "userId"
+            ],
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "x-order": "1"
+                },
+                "ownerId": {
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "locationId": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "images": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "name": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "description": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "price": {
+                    "type": "integer",
+                    "x-order": "7"
+                },
+                "review": {
+                    "type": "string",
+                    "x-order": "8"
                 }
             }
         },
@@ -1004,6 +1423,13 @@ const docTemplate = `{
                     "x-order": "6"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

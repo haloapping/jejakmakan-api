@@ -38,6 +38,8 @@ func (r Repository) Add(c echo.Context, req AddReq) (Location, error) {
 		q,
 		ulid.Make().String(), req.District, req.City, req.Province, req.PostalCode, req.Details,
 	)
+	c.Set("query", q)
+	c.Set("queryArgs", req)
 	var l Location
 	err = row.Scan(&l.Id, &l.District, &l.City, &l.Province, &l.PostalCode, &l.Details, &l.CreatedAt, &l.UpdatedAt)
 	if err != nil {
@@ -65,6 +67,8 @@ func (r Repository) GetById(c echo.Context, id string) (Location, error) {
 		WHERE id = $1;
 	`
 	row := tx.QueryRow(ctx, q, id)
+	c.Set("query", q)
+	c.Set("queryArgs", id)
 	var l Location
 	err = row.Scan(&l.Id, &l.District, &l.City, &l.Province, &l.PostalCode, &l.Details, &l.CreatedAt, &l.UpdatedAt)
 	if err != nil {
@@ -77,16 +81,33 @@ func (r Repository) GetById(c echo.Context, id string) (Location, error) {
 	return l, nil
 }
 
-func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, error) {
+func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, int, error) {
 	ctx := c.Request().Context()
 	tx, err := r.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	q := `
+		SELECT COUNT(id)
+		FROM (
+			SELECT id
+			FROM locations
+		);
+	`
+	row := tx.QueryRow(ctx, q)
+	c.Set("query", q)
+	var total int
+	err = row.Scan(&total)
+	if err != nil {
+		tx.Rollback(ctx)
+
+		return []Location{}, 0, err
+	}
+
+	q = `
 		SELECT COUNT(id)
 		FROM (
 			SELECT id
@@ -95,13 +116,15 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 			OFFSET $2
 		);
 	`
-	row := tx.QueryRow(ctx, q, limit, offset)
+	row = tx.QueryRow(ctx, q, limit, offset)
+	c.Set("query", q)
+	c.Set("queryArgs", []int{limit, offset})
 	var count int
 	err = row.Scan(&count)
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	q = `
@@ -110,11 +133,13 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 		LIMIT $1
 		OFFSET $2;
 	`
+	c.Set("query", q)
+	c.Set("queryArgs", []int{limit, offset})
 	rows, err := tx.Query(ctx, q, limit, offset)
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	if limit > count {
@@ -128,7 +153,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 		if err != nil {
 			tx.Rollback(ctx)
 
-			return []Location{}, err
+			return []Location{}, 0, err
 		}
 		locations[idx] = l
 		idx++
@@ -136,7 +161,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 
 	fmt.Println(locations)
 
-	return locations, nil
+	return locations, total, nil
 }
 
 func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Location, error) {
@@ -193,8 +218,9 @@ func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Locati
 		strings.Join(columnArgs, ", "),
 		argPos,
 	)
-
 	row := tx.QueryRow(ctx, q, columnValues...)
+	c.Set("query", q)
+	c.Set("queryArgs", []interface{}{id, req})
 	var l Location
 	err = row.Scan(&l.Id, &l.District, &l.City, &l.Province, &l.PostalCode, &l.Details, &l.CreatedAt, &l.UpdatedAt)
 	if err != nil {
@@ -220,6 +246,8 @@ func (r Repository) DeleteById(c echo.Context, id string) (Location, error) {
 		WHERE id = $1
 		RETURNING *;
 	`
+	c.Set("query", q)
+	c.Set("queryArgs", id)
 	row := tx.QueryRow(ctx, q, id)
 	var l Location
 	err = row.Scan(&l.Id, &l.District, &l.City, &l.Province, &l.PostalCode, &l.Details, &l.CreatedAt, &l.UpdatedAt)

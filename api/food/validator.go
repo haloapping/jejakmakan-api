@@ -28,7 +28,7 @@ func AddValidation(req AddReq) map[string][]string {
 	}
 
 	if req.Price < 0 {
-		validation["price"] = append(validation["price"], "cannot empty")
+		validation["price"] = append(validation["price"], "cannot negative value")
 	}
 
 	if req.Review == "" {

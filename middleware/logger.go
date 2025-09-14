@@ -17,16 +17,18 @@ func EchoLogger(r *echo.Echo) {
 		LogStatus: true,
 		LogURI:    true,
 		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+			query := c.Get("query")
+			queryArgs := c.Get("queryArgs")
 			fmt.Printf(
-				"Method: %v, Uri: %v, Status: %v\n",
-				v.Method, v.URI, v.Status,
+				"Method: %v, Uri: %v, Status: %v, Query: %v, QueryArgs: %v\n",
+				v.Method, v.URI, v.Status, query, queryArgs,
 			)
 			return nil
 		},
 	}))
 }
 
-func MultiLog() (*os.File, error) {
+func MultiLogger() (*os.File, error) {
 	logFile, err := os.OpenFile("app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return nil, err

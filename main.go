@@ -11,17 +11,34 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @securityDefinitions.apikey	BearerAuth
+// @in							header
+// @name						Authorization
 func main() {
 	// console and file log
-	logFile, err := customMiddleware.MultiLog()
+	logFile, err := customMiddleware.MultiLogger()
 	if err != nil {
 		panic(err)
 	}
 	defer logFile.Close()
 
+	// conn string
+	connStr, err := db.ConnDBStr(".env")
+	if err != nil {
+		panic(err)
+	}
+
+	// setup config
+	dbconfig, err := db.NewDBConfig(connStr)
+	if err != nil {
+		panic(err)
+	}
+
 	// initiate database pooling
-	connStr := config.DBConnStr(".env")
-	pool := db.NewConnection(connStr)
+	pool, err := db.NewDBPool(dbconfig)
+	if err != nil {
+		panic(err)
+	}
 	defer pool.Close()
 
 	// routing
@@ -29,6 +46,7 @@ func main() {
 	customMiddleware.EchoLogger(r)
 	Router(pool, r)
 
+	// public route
 	r.GET("/", func(c echo.Context) error {
 		htmlContent, err := scalar.ApiReferenceHTML(&scalar.Options{
 			SpecURL: "./docs/swagger.json",

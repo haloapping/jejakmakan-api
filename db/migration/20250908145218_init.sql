@@ -71,7 +71,7 @@ CREATE TABLE food_images(
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NULL,
 
-     FOREIGN KEY(food_id) REFERENCES foods(id)
+    FOREIGN KEY(food_id) REFERENCES foods(id) ON DELETE CASCADE
 );
 
 CREATE TABLE food_stats(
@@ -88,7 +88,7 @@ CREATE TABLE food_stats(
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NULL,
 
-    FOREIGN KEY(food_id) REFERENCES foods(id)
+    FOREIGN KEY(food_id) REFERENCES foods(id) ON DELETE CASCADE
 );
 -- +goose StatementEnd
 
