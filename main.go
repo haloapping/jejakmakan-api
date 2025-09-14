@@ -22,14 +22,8 @@ func main() {
 	}
 	defer logFile.Close()
 
-	// conn string
-	connStr, err := db.ConnDBStr(".env")
-	if err != nil {
-		panic(err)
-	}
-
 	// setup config
-	dbconfig, err := db.NewDBConfig(connStr)
+	dbconfig, err := db.NewDBConfig(db.ConnDBStr())
 	if err != nil {
 		panic(err)
 	}

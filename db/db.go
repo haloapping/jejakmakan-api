@@ -7,16 +7,9 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/joho/godotenv"
 )
 
-func ConnDBStr(envName string) (string, error) {
-	_ = fmt.Sprintf("../%s", envName)
-	err := godotenv.Load(fmt.Sprintf("./%s", envName))
-	if err != nil {
-		return "", fmt.Errorf("Error loading .env file")
-	}
-
+func ConnDBStr() string {
 	connStr := fmt.Sprintf(
 		"postgresql://%s:%s@%s:%s/%s?sslmode=%s",
 		os.Getenv("DB_USER"),
@@ -27,7 +20,7 @@ func ConnDBStr(envName string) (string, error) {
 		os.Getenv("DB_SSL_MODE"),
 	)
 
-	return connStr, nil
+	return connStr
 }
 
 func NewDBConfig(connStr string) (*pgxpool.Config, error) {
