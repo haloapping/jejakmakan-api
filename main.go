@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/MarceloPetrucio/go-scalar-api-reference"
-	"github.com/haloapping/jejakmakan-api/config"
 	"github.com/haloapping/jejakmakan-api/db"
 	customMiddleware "github.com/haloapping/jejakmakan-api/middleware"
 	"github.com/labstack/echo/v4"
@@ -59,5 +59,5 @@ func main() {
 		return c.HTML(http.StatusOK, htmlContent)
 	})
 
-	r.Start(config.APIUrl(".env"))
+	r.Start(os.Getenv("API_URL"))
 }

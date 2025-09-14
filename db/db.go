@@ -4,20 +4,28 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func ConnDBStr() string {
+	dbUser := strings.Trim(os.Getenv("DB_USER"), "\"=")
+	dbPassword := strings.Trim(os.Getenv("DB_PASSWORD"), "\"=")
+	dbHost := strings.Trim(os.Getenv("DB_HOST"), "\"=")
+	dbPort := strings.Trim(os.Getenv("DB_PORT"), "\"=")
+	dbName := strings.Trim(os.Getenv("DB_NAME"), "\"=")
+	dbSSLMode := strings.Trim(os.Getenv("DB_SSL_MODE"), "\"=")
+
 	connStr := fmt.Sprintf(
 		"postgresql://%s:%s@%s:%s/%s?sslmode=%s",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_SSL_MODE"),
+		dbUser,
+		dbPassword,
+		dbHost,
+		dbPort,
+		dbName,
+		dbSSLMode,
 	)
 
 	return connStr
