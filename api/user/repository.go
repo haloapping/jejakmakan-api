@@ -57,13 +57,13 @@ func (r Repository) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 	}
 
 	q := `
-		SELECT id, username
+		SELECT id, username, password
 		FROM users
 		WHERE username = $1;
 	`
 	row := tx.QueryRow(ctx, q, req.Username)
 	c.Set("query", q)
-	c.Set("queryArgs", req)
+	c.Set("queryArgs", req.Username)
 	var ul UserLogin
 	err = row.Scan(&ul.Id, &ul.Username, &ul.Password)
 	if err != nil {

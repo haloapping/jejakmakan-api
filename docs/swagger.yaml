@@ -1,4 +1,23 @@
 definitions:
+  api.MultipleDataResp-food_Food:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/food.Food'
+        type: array
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+      pagination:
+        allOf:
+        - $ref: '#/definitions/api.Pagination'
+        x-order: "2"
+    required:
+    - data
+    - message
+    - pagination
+    type: object
   api.MultipleDataResp-location_Location:
     properties:
       data:
@@ -9,9 +28,14 @@ definitions:
       message:
         type: string
         x-order: "1"
+      pagination:
+        allOf:
+        - $ref: '#/definitions/api.Pagination'
+        x-order: "2"
     required:
     - data
     - message
+    - pagination
     type: object
   api.MultipleDataResp-owner_Owner:
     properties:
@@ -19,6 +43,44 @@ definitions:
         items:
           $ref: '#/definitions/owner.Owner'
         type: array
+        x-order: "2"
+      message:
+        type: string
+        x-order: "1"
+      pagination:
+        allOf:
+        - $ref: '#/definitions/api.Pagination'
+        x-order: "2"
+    required:
+    - data
+    - message
+    - pagination
+    type: object
+  api.Pagination:
+    properties:
+      page:
+        type: integer
+        x-order: "1"
+      pageSize:
+        type: integer
+        x-order: "2"
+      totalItem:
+        type: integer
+        x-order: "4"
+      totalPage:
+        type: integer
+        x-order: "3"
+    required:
+    - page
+    - pageSize
+    - totalItem
+    - totalPage
+    type: object
+  api.SingleDataResp-food_AddFood:
+    properties:
+      data:
+        allOf:
+        - $ref: '#/definitions/food.AddFood'
         x-order: "2"
       message:
         type: string
@@ -92,6 +154,54 @@ definitions:
     - data
     - message
     type: object
+  food.AddFood:
+    properties:
+      createdAt:
+        type: string
+        x-order: "10"
+      description:
+        type: string
+        x-order: "7"
+      id:
+        type: string
+        x-order: "1"
+      images:
+        type: string
+        x-order: "5"
+      locationId:
+        type: string
+        x-order: "4"
+      name:
+        type: string
+        x-order: "6"
+      ownerId:
+        type: string
+        x-order: "3"
+      price:
+        type: integer
+        x-order: "8"
+      review:
+        type: string
+        x-order: "9"
+      updatedAt:
+        type: string
+        x-order: "11"
+      userId:
+        type: string
+        x-order: "2"
+    required:
+    - createdAt
+    - description
+    - id
+    - images
+    - locationId
+    - name
+    - ownerId
+    - price
+    - review
+    - updatedAt
+    - userId
+    type: object
   food.AddReq:
     properties:
       description:
@@ -142,13 +252,13 @@ definitions:
       images:
         type: string
         x-order: "5"
-      locationId:
+      location:
         type: string
         x-order: "4"
       name:
         type: string
         x-order: "6"
-      ownerId:
+      ownername:
         type: string
         x-order: "3"
       price:
@@ -160,7 +270,7 @@ definitions:
       updatedAt:
         type: string
         x-order: "11"
-      userId:
+      username:
         type: string
         x-order: "2"
     required:
@@ -168,12 +278,48 @@ definitions:
     - description
     - id
     - images
+    - location
+    - name
+    - ownername
+    - price
+    - review
+    - updatedAt
+    - username
+    type: object
+  food.UpdateReq:
+    properties:
+      description:
+        type: string
+        x-order: "6"
+      images:
+        type: string
+        x-order: "4"
+      locationId:
+        type: string
+        x-order: "3"
+      name:
+        type: string
+        x-order: "5"
+      ownerId:
+        type: string
+        x-order: "2"
+      price:
+        type: integer
+        x-order: "7"
+      review:
+        type: string
+        x-order: "8"
+      userId:
+        type: string
+        x-order: "1"
+    required:
+    - description
+    - images
     - locationId
     - name
     - ownerId
     - price
     - review
-    - updatedAt
     - userId
     type: object
   location.AddReq:
@@ -391,6 +537,35 @@ info:
   contact: {}
 paths:
   /foods:
+    get:
+      consumes:
+      - application/json
+      description: Get all foods
+      parameters:
+      - default: 15
+        description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - default: 1
+        description: offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.MultipleDataResp-food_Food'
+      security:
+      - BearerAuth: []
+      summary: Get all foods
+      tags:
+      - foods
     post:
       consumes:
       - application/json
@@ -408,10 +583,83 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.SingleDataResp-food_Food'
+            $ref: '#/definitions/api.SingleDataResp-food_AddFood'
       security:
       - BearerAuth: []
       summary: Add new food
+      tags:
+      - foods
+  /foods/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete food by id
+      parameters:
+      - description: food id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-food_Food'
+      security:
+      - BearerAuth: []
+      summary: Delete food by id
+      tags:
+      - foods
+    get:
+      consumes:
+      - application/json
+      description: Get food by id
+      parameters:
+      - description: food id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-food_Food'
+      security:
+      - BearerAuth: []
+      summary: Get food by id
+      tags:
+      - foods
+    patch:
+      consumes:
+      - application/json
+      description: Update food by id
+      parameters:
+      - description: food id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update request
+        in: body
+        name: food
+        required: true
+        schema:
+          $ref: '#/definitions/food.UpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.SingleDataResp-food_Food'
+      security:
+      - BearerAuth: []
+      summary: Update food by id
       tags:
       - foods
   /locations:

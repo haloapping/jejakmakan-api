@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/haloapping/jejakmakan-api/api/user"
+	"github.com/haloapping/jejakmakan-api/jwt"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,7 +26,7 @@ func JWTAuth(next echo.HandlerFunc) echo.HandlerFunc {
 
 		// parse and validate JWT
 		jwtSecret := os.Getenv("JWT_SECRET_KEY")
-		token, err := user.ParseToken(tokenStr, jwtSecret)
+		token, err := jwt.ParseToken(tokenStr, jwtSecret)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusUnauthorized, "Invalid or expired token")
 		}

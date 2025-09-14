@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/haloapping/jejakmakan-api/api"
+	"github.com/haloapping/jejakmakan-api/jwt"
 	"github.com/labstack/echo/v4"
 	zlog "github.com/rs/zerolog/log"
 )
@@ -97,7 +98,7 @@ func (h *Handler) Login(c echo.Context) error {
 		return api.ErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	token, err := GenerateToken(ul.Id, ul.Username)
+	token, err := jwt.GenerateToken(ul.Id, ul.Username)
 	if err != nil {
 		zlog.Error().Msg(err.Error())
 

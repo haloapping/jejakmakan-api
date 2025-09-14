@@ -1,6 +1,7 @@
 package owner
 
 import (
+	"math"
 	"net/http"
 	"strconv"
 
@@ -104,7 +105,7 @@ func (h Handler) GetAll(c echo.Context) error {
 		return api.ErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	owners, err := h.Service.GetAll(c, limitInt, offsetInt)
+	owners, total, err := h.Service.GetAll(c, limitInt, offsetInt)
 	if err != nil {
 		zlog.Error().Msg(err.Error())
 
@@ -117,7 +118,13 @@ func (h Handler) GetAll(c echo.Context) error {
 		http.StatusOK,
 		api.MultipleDataResp[Owner]{
 			Message: "retrieve all owners",
-			Data:    owners,
+			Pagination: api.Pagination{
+				Page:      (offsetInt / limitInt) + 1,
+				PageSize:  limitInt,
+				TotalPage: int(math.Ceil(float64(total)) / float64(limitInt)),
+				TotalItem: total,
+			},
+			Data: owners,
 		},
 	)
 }

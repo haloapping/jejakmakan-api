@@ -1,6 +1,7 @@
 package location
 
 import (
+	"math"
 	"net/http"
 	"strconv"
 
@@ -74,7 +75,7 @@ func (h Handler) Add(c echo.Context) error {
 //	@Param			limit		query		int	true	"limit"		default(15)
 //	@Param			offset		query		int	true	"offset"	default(1)
 //	@Success		200			{object}	api.MultipleDataResp[Location]
-//	@Router			/locations 																									[get]
+//	@Router			/locations 																																					[get]
 func (h Handler) GetAll(c echo.Context) error {
 	validation := make(map[string][]string)
 	offset := c.QueryParam("offset")
@@ -104,7 +105,7 @@ func (h Handler) GetAll(c echo.Context) error {
 		return api.ErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	l, err := h.Service.GetAll(c, limitInt, offsetInt)
+	l, total, err := h.Service.GetAll(c, limitInt, offsetInt)
 	if err != nil {
 		zlog.Error().Msg(err.Error())
 
@@ -117,7 +118,13 @@ func (h Handler) GetAll(c echo.Context) error {
 		http.StatusCreated,
 		api.MultipleDataResp[Location]{
 			Message: "retrieve all locations",
-			Data:    l,
+			Pagination: api.Pagination{
+				Page:      (offsetInt / limitInt) + 1,
+				PageSize:  limitInt,
+				TotalPage: int(math.Ceil(float64(total)) / float64(limitInt)),
+				TotalItem: total,
+			},
+			Data: l,
 		},
 	)
 }

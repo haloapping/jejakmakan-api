@@ -81,16 +81,33 @@ func (r Repository) GetById(c echo.Context, id string) (Location, error) {
 	return l, nil
 }
 
-func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, error) {
+func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, int, error) {
 	ctx := c.Request().Context()
 	tx, err := r.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	q := `
+		SELECT COUNT(id)
+		FROM (
+			SELECT id
+			FROM locations
+		);
+	`
+	row := tx.QueryRow(ctx, q)
+	c.Set("query", q)
+	var total int
+	err = row.Scan(&total)
+	if err != nil {
+		tx.Rollback(ctx)
+
+		return []Location{}, 0, err
+	}
+
+	q = `
 		SELECT COUNT(id)
 		FROM (
 			SELECT id
@@ -99,7 +116,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 			OFFSET $2
 		);
 	`
-	row := tx.QueryRow(ctx, q, limit, offset)
+	row = tx.QueryRow(ctx, q, limit, offset)
 	c.Set("query", q)
 	c.Set("queryArgs", []int{limit, offset})
 	var count int
@@ -107,7 +124,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	q = `
@@ -122,7 +139,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Location{}, err
+		return []Location{}, 0, err
 	}
 
 	if limit > count {
@@ -136,7 +153,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 		if err != nil {
 			tx.Rollback(ctx)
 
-			return []Location{}, err
+			return []Location{}, 0, err
 		}
 		locations[idx] = l
 		idx++
@@ -144,7 +161,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, e
 
 	fmt.Println(locations)
 
-	return locations, nil
+	return locations, total, nil
 }
 
 func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Location, error) {

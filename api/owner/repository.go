@@ -52,16 +52,33 @@ func (r Repository) Add(c echo.Context, req AddReq) (Owner, error) {
 	return o, nil
 }
 
-func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, error) {
+func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, int, error) {
 	ctx := c.Request().Context()
 	tx, err := r.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Owner{}, err
+		return []Owner{}, 0, err
 	}
 
 	q := `
+		SELECT COUNT(id)
+		FROM (
+			SELECT id
+			FROM owners
+		);
+	`
+	row := tx.QueryRow(ctx, q)
+	c.Set("query", q)
+	var total int
+	err = row.Scan(&total)
+	if err != nil {
+		tx.Rollback(ctx)
+
+		return []Owner{}, 0, err
+	}
+
+	q = `
 		SELECT COUNT(id)
 		FROM (
 			SELECT id
@@ -70,7 +87,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 			OFFSET $2
 		);
 	`
-	row := tx.QueryRow(ctx, q, limit, offset)
+	row = tx.QueryRow(ctx, q, limit, offset)
 	c.Set("query", q)
 	c.Set("query-args", []int{limit, offset})
 	var count int
@@ -78,7 +95,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Owner{}, err
+		return []Owner{}, 0, err
 	}
 
 	q = `
@@ -93,7 +110,7 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 	if err != nil {
 		tx.Rollback(ctx)
 
-		return []Owner{}, err
+		return []Owner{}, 0, err
 	}
 	if limit > count {
 		limit = count
@@ -106,13 +123,13 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Owner, erro
 		if err != nil {
 			tx.Rollback(ctx)
 
-			return []Owner{}, err
+			return []Owner{}, 0, err
 		}
 		owners[idx] = o
 		idx++
 	}
 
-	return owners, nil
+	return owners, total, nil
 }
 
 func (r Repository) GetById(c echo.Context, id string) (Owner, error) {
