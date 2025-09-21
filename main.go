@@ -3,18 +3,30 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
+	_ "net/http/pprof"
 
 	"github.com/MarceloPetrucio/go-scalar-api-reference"
 	"github.com/haloapping/jejakmakan-api/db"
 	customMiddleware "github.com/haloapping/jejakmakan-api/middleware"
 	"github.com/labstack/echo/v4"
+	zlog "github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 // @securityDefinitions.apikey	BearerAuth
 // @in							header
 // @name						Authorization
 func main() {
+	// load env
+	viper.SetConfigType("json")
+	viper.AddConfigPath(".")
+	viper.SetConfigName("prod.config")
+	err := viper.ReadInConfig()
+	if err != nil {
+		zlog.Error().Msg(err.Error())
+	}
+	viper.AutomaticEnv()
+
 	// console and file log
 	logFile, err := customMiddleware.MultiLogger()
 	if err != nil {
@@ -23,7 +35,16 @@ func main() {
 	defer logFile.Close()
 
 	// setup config
-	dbconfig, err := db.NewDBConfig(db.ConnDBStr())
+	connStr := fmt.Sprintf(
+		"postgresql://%s:%s@%s:%d/%s?sslmode=%s",
+		viper.GetString("DB_USER"),
+		viper.GetString("DB_PASSWORD"),
+		viper.GetString("DB_HOST"),
+		viper.GetInt("DB_PORT"),
+		viper.GetString("DB_NAME"),
+		viper.GetString("DB_SSLMODE"),
+	)
+	dbconfig, err := db.NewDBConfig(connStr)
 	if err != nil {
 		panic(err)
 	}
@@ -59,5 +80,5 @@ func main() {
 		return c.HTML(http.StatusOK, htmlContent)
 	})
 
-	r.Start(os.Getenv("API_URL"))
+	r.Start(fmt.Sprintf(":%d", viper.GetInt("APP_PORT")))
 }
