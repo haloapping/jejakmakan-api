@@ -8,12 +8,12 @@ import (
 )
 
 type Service struct {
-	Repository
+	Database
 }
 
-func NewService(r Repository) Service {
+func NewService(db Database) Service {
 	return Service{
-		Repository: r,
+		Database: db,
 	}
 }
 
@@ -24,7 +24,7 @@ func (s Service) Register(c echo.Context, req UserRegisterReq) (UserRegister, er
 	}
 
 	req.Password = string(hashPassword)
-	items, err := s.Repository.Register(c, req)
+	items, err := s.Database.Register(c, req)
 	if err != nil {
 		return UserRegister{}, err
 	}
@@ -33,7 +33,7 @@ func (s Service) Register(c echo.Context, req UserRegisterReq) (UserRegister, er
 }
 
 func (s Service) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
-	items, err := s.Repository.Login(c, req)
+	items, err := s.Database.Login(c, req)
 	if err != nil {
 		return UserLogin{}, err
 	}
@@ -47,7 +47,7 @@ func (s Service) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 }
 
 func (s Service) Biodata(c echo.Context, username string) (UserBiodata, error) {
-	items, err := s.Repository.Biodata(c, username)
+	items, err := s.Database.Biodata(c, username)
 	if err != nil {
 		return UserBiodata{}, err
 	}

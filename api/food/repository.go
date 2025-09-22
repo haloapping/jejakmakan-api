@@ -10,19 +10,19 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-type Repository struct {
+type Database struct {
 	Pool *pgxpool.Pool
 }
 
-func NewRepository(p *pgxpool.Pool) Repository {
-	return Repository{
+func NewDatabase(p *pgxpool.Pool) Database {
+	return Database{
 		Pool: p,
 	}
 }
 
-func (r Repository) Add(c echo.Context, req AddReq) (AddFood, error) {
+func (db Database) Add(c echo.Context, req AddReq) (AddFood, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -79,9 +79,9 @@ func (r Repository) Add(c echo.Context, req AddReq) (AddFood, error) {
 	return f, nil
 }
 
-func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Food, int, error) {
+func (db Database) GetAll(c echo.Context, limit int, offset int) ([]Food, int, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -168,9 +168,9 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Food, int, 
 	return foods, total, nil
 }
 
-func (r Repository) GetById(c echo.Context, id string) (Food, error) {
+func (db Database) GetById(c echo.Context, id string) (Food, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -210,9 +210,9 @@ func (r Repository) GetById(c echo.Context, id string) (Food, error) {
 	return f, nil
 }
 
-func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Food, error) {
+func (db Database) UpdateById(c echo.Context, id string, req UpdateReq) (Food, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -294,9 +294,9 @@ func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Food, 
 	return f, nil
 }
 
-func (r Repository) DeleteById(c echo.Context, id string) (Food, error) {
+func (db Database) DeleteById(c echo.Context, id string) (Food, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 

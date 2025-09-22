@@ -3,17 +3,17 @@ package location
 import "github.com/labstack/echo/v4"
 
 type Service struct {
-	Repository
+	Database
 }
 
-func NewService(r Repository) Service {
+func NewService(db Database) Service {
 	return Service{
-		Repository: r,
+		Database: db,
 	}
 }
 
 func (s Service) Add(c echo.Context, req AddReq) (Location, error) {
-	l, err := s.Repository.Add(c, req)
+	l, err := s.Database.Add(c, req)
 	if err != nil {
 		return Location{}, err
 	}
@@ -22,7 +22,7 @@ func (s Service) Add(c echo.Context, req AddReq) (Location, error) {
 }
 
 func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Location, int, error) {
-	locations, total, err := s.Repository.GetAll(c, limit, offset)
+	locations, total, err := s.Database.GetAll(c, limit, offset)
 	if err != nil {
 		return []Location{}, 0, err
 	}
@@ -31,7 +31,7 @@ func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Location, int,
 }
 
 func (s Service) GetById(c echo.Context, id string) (Location, error) {
-	l, err := s.Repository.GetById(c, id)
+	l, err := s.Database.GetById(c, id)
 	if err != nil {
 		return Location{}, err
 	}
@@ -40,7 +40,7 @@ func (s Service) GetById(c echo.Context, id string) (Location, error) {
 }
 
 func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Location, error) {
-	l, err := s.Repository.UpdateById(c, id, req)
+	l, err := s.Database.UpdateById(c, id, req)
 	if err != nil {
 		return Location{}, err
 	}
@@ -49,7 +49,7 @@ func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Location,
 }
 
 func (s Service) DeleteById(c echo.Context, id string) (Location, error) {
-	l, err := s.Repository.DeleteById(c, id)
+	l, err := s.Database.DeleteById(c, id)
 	if err != nil {
 		return Location{}, err
 	}

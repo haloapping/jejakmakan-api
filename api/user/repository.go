@@ -6,19 +6,19 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-type Repository struct {
+type Database struct {
 	Pool *pgxpool.Pool
 }
 
-func NewRepository(p *pgxpool.Pool) Repository {
-	return Repository{
+func NewDatabase(p *pgxpool.Pool) Database {
+	return Database{
 		Pool: p,
 	}
 }
 
-func (r Repository) Register(c echo.Context, req UserRegisterReq) (UserRegister, error) {
+func (db Database) Register(c echo.Context, req UserRegisterReq) (UserRegister, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -47,9 +47,9 @@ func (r Repository) Register(c echo.Context, req UserRegisterReq) (UserRegister,
 	return ur, nil
 }
 
-func (r Repository) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
+func (db Database) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -76,9 +76,9 @@ func (r Repository) Login(c echo.Context, req UserLoginReq) (UserLogin, error) {
 	return ul, err
 }
 
-func (r Repository) Biodata(c echo.Context, username string) (UserBiodata, error) {
+func (db Database) Biodata(c echo.Context, username string) (UserBiodata, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 

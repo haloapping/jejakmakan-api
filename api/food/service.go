@@ -3,17 +3,17 @@ package food
 import "github.com/labstack/echo/v4"
 
 type Service struct {
-	Repository
+	Database
 }
 
-func NewService(r Repository) Service {
+func NewService(db Database) Service {
 	return Service{
-		Repository: r,
+		Database: db,
 	}
 }
 
 func (s Service) Add(c echo.Context, req AddReq) (AddFood, error) {
-	f, err := s.Repository.Add(c, req)
+	f, err := s.Database.Add(c, req)
 	if err != nil {
 		return AddFood{}, err
 	}
@@ -22,7 +22,7 @@ func (s Service) Add(c echo.Context, req AddReq) (AddFood, error) {
 }
 
 func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Food, int, error) {
-	foods, total, err := s.Repository.GetAll(c, limit, offset)
+	foods, total, err := s.Database.GetAll(c, limit, offset)
 	if err != nil {
 		return []Food{}, 0, err
 	}
@@ -31,7 +31,7 @@ func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Food, int, err
 }
 
 func (s Service) GetById(c echo.Context, id string) (Food, error) {
-	f, err := s.Repository.GetById(c, id)
+	f, err := s.Database.GetById(c, id)
 	if err != nil {
 		return Food{}, err
 	}
@@ -40,7 +40,7 @@ func (s Service) GetById(c echo.Context, id string) (Food, error) {
 }
 
 func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Food, error) {
-	f, err := s.Repository.UpdateById(c, id, req)
+	f, err := s.Database.UpdateById(c, id, req)
 	if err != nil {
 		return Food{}, err
 	}
@@ -49,7 +49,7 @@ func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Food, err
 }
 
 func (s Service) DeleteById(c echo.Context, id string) (Food, error) {
-	f, err := s.Repository.DeleteById(c, id)
+	f, err := s.Database.DeleteById(c, id)
 	if err != nil {
 		return Food{}, err
 	}
