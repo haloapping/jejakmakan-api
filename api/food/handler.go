@@ -76,7 +76,7 @@ func (h Handler) Add(c echo.Context) error {
 //	@Param			limit	query		int	true	"limit"		default(15)
 //	@Param			offset	query		int	true	"offset"	default(1)
 //	@Success		200		{object}	api.MultipleDataResp[Food]
-//	@Router			/foods 																																					[get]
+//	@Router			/foods 																																							[get]
 func (h Handler) GetAll(c echo.Context) error {
 	validation := make(map[string][]string)
 	offset := c.QueryParam("offset")

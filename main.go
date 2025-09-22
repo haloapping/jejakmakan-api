@@ -20,7 +20,7 @@ func main() {
 	// load env
 	viper.SetConfigType("json")
 	viper.AddConfigPath(".")
-	viper.SetConfigName("prod.config")
+	viper.SetConfigName("dev.config")
 	err := viper.ReadInConfig()
 	if err != nil {
 		zlog.Error().Msg(err.Error())

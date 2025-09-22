@@ -5,17 +5,17 @@ import (
 )
 
 type Service struct {
-	Repository
+	Database
 }
 
-func NewService(r Repository) Service {
+func NewService(db Database) Service {
 	return Service{
-		Repository: r,
+		Database: db,
 	}
 }
 
 func (s Service) Add(c echo.Context, req AddReq) (Owner, error) {
-	o, err := s.Repository.Add(c, req)
+	o, err := s.Database.Add(c, req)
 	if err != nil {
 		return Owner{}, err
 	}
@@ -24,7 +24,7 @@ func (s Service) Add(c echo.Context, req AddReq) (Owner, error) {
 }
 
 func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Owner, int, error) {
-	owners, total, err := s.Repository.GetAll(c, limit, offset)
+	owners, total, err := s.Database.GetAll(c, limit, offset)
 	if err != nil {
 		return []Owner{}, 0, err
 	}
@@ -33,7 +33,7 @@ func (s Service) GetAll(c echo.Context, limit int, offset int) ([]Owner, int, er
 }
 
 func (s Service) GetById(c echo.Context, id string) (Owner, error) {
-	o, err := s.Repository.GetById(c, id)
+	o, err := s.Database.GetById(c, id)
 	if err != nil {
 		return Owner{}, err
 	}
@@ -42,7 +42,7 @@ func (s Service) GetById(c echo.Context, id string) (Owner, error) {
 }
 
 func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Owner, error) {
-	o, err := s.Repository.UpdateById(c, id, req)
+	o, err := s.Database.UpdateById(c, id, req)
 	if err != nil {
 		return Owner{}, err
 	}
@@ -51,7 +51,7 @@ func (s Service) UpdateById(c echo.Context, id string, req UpdateReq) (Owner, er
 }
 
 func (s Service) DeleteById(c echo.Context, id string) (Owner, error) {
-	o, err := s.Repository.DeleteById(c, id)
+	o, err := s.Database.DeleteById(c, id)
 	if err != nil {
 		return Owner{}, err
 	}

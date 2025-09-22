@@ -9,19 +9,19 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-type Repository struct {
+type Database struct {
 	Pool *pgxpool.Pool
 }
 
-func NewRepository(p *pgxpool.Pool) Repository {
-	return Repository{
+func NewDatabase(p *pgxpool.Pool) Database {
+	return Database{
 		Pool: p,
 	}
 }
 
-func (r Repository) Add(c echo.Context, req AddReq) (Location, error) {
+func (db Database) Add(c echo.Context, req AddReq) (Location, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -52,9 +52,9 @@ func (r Repository) Add(c echo.Context, req AddReq) (Location, error) {
 	return l, nil
 }
 
-func (r Repository) GetById(c echo.Context, id string) (Location, error) {
+func (db Database) GetById(c echo.Context, id string) (Location, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -81,9 +81,9 @@ func (r Repository) GetById(c echo.Context, id string) (Location, error) {
 	return l, nil
 }
 
-func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, int, error) {
+func (db Database) GetAll(c echo.Context, limit int, offset int) ([]Location, int, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -164,9 +164,9 @@ func (r Repository) GetAll(c echo.Context, limit int, offset int) ([]Location, i
 	return locations, total, nil
 }
 
-func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Location, error) {
+func (db Database) UpdateById(c echo.Context, id string, req UpdateReq) (Location, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 
@@ -232,9 +232,9 @@ func (r Repository) UpdateById(c echo.Context, id string, req UpdateReq) (Locati
 	return l, nil
 }
 
-func (r Repository) DeleteById(c echo.Context, id string) (Location, error) {
+func (db Database) DeleteById(c echo.Context, id string) (Location, error) {
 	ctx := c.Request().Context()
-	tx, err := r.Pool.Begin(ctx)
+	tx, err := db.Pool.Begin(ctx)
 	if err != nil {
 		tx.Rollback(ctx)
 

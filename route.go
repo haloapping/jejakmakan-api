@@ -12,28 +12,28 @@ import (
 
 func Router(pool *pgxpool.Pool, r *echo.Echo) {
 	userRoute := r.Group("/users")
-	userRepo := user.NewRepository(pool)
+	userRepo := user.NewDatabase(pool)
 	userService := user.NewService(userRepo)
 	userHandler := user.NewHandler(userService)
 	user.Router(userRoute, userHandler)
 
 	ownerRoute := r.Group("/owners")
 	ownerRoute.Use(middleware.JWTAuth)
-	ownerRepo := owner.NewRepository(pool)
+	ownerRepo := owner.NewDatabase(pool)
 	ownerService := owner.NewService(ownerRepo)
 	ownerHandler := owner.NewHandler(ownerService)
 	owner.Router(ownerRoute, ownerHandler)
 
 	locationRoute := r.Group("/locations")
 	locationRoute.Use(middleware.JWTAuth)
-	locationRepo := location.NewRepository(pool)
+	locationRepo := location.NewDatabase(pool)
 	locationService := location.NewService(locationRepo)
 	locationHandler := location.NewHandler(locationService)
 	location.Router(locationRoute, locationHandler)
 
 	foodRoute := r.Group("/foods")
 	foodRoute.Use(middleware.JWTAuth)
-	foodRepo := food.NewRepository(pool)
+	foodRepo := food.NewDatabase(pool)
 	foodService := food.NewService(foodRepo)
 	foodHandler := food.NewHandler(foodService)
 	food.Router(foodRoute, foodHandler)
